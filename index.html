@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting to Survey...</title>
+  <script>
+    const survey1 = "https://forms.gle/yourSurvey1"; // Replace with real URL
+    const survey2 = "https://forms.gle/yourSurvey2"; // Replace with real URL
+
+    // Pick randomly
+    const destination = Math.random() < 0.5 ? survey1 : survey2;
+
+    // Redirect after short delay
+    setTimeout(() => {
+      window.location.href = destination;
+    }, 300);
+  </script>
+</head>
+<body>
+  <p>Redirecting you to a survey... If nothing happens, <a id="fallback" href="#">click here</a>.</p>
+  <script>
+    document.getElementById("fallback").href = destination;
+  </script>
+</body>
+</html>
