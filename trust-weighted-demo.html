@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trust-Weighted Link Analysis Demo</title>
+  <title>Smart Ratings Demo: The Megaphone Effect</title>
   <style>
     * {
       box-sizing: border-box;
@@ -221,69 +221,154 @@
       padding: 2px 4px;
       border-radius: 3px;
     }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+      margin-left: 5px;
+      width: 16px;
+      height: 16px;
+      background: #3498db;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 16px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 250px;
+      background-color: #555;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -125px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.9em;
+      line-height: 1.4;
+      font-weight: normal;
+    }
+    
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+    
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Trust-Weighted Link Analysis Demo</h1>
+    <h1><span style="font-size: 1.5em; margin-right: 10px;">📢</span> Smart Ratings Demo</h1>
+    <div style="color: #7f8c8d; font-size: 1.2em; margin-bottom: 25px; font-style: italic;">The Megaphone Effect: Better Pickers Get a Bigger Voice</div>
     
     <div class="intro">
-      <p><strong>The Core Idea:</strong> In rating systems, not all raters are equally reliable. Some users consistently identify high-quality content, while others have poor judgment or act maliciously. This demo shows how we can iteratively learn user reliability weights based on rating agreement, then use those weights to compute better content scores.</p>
+      <p><strong>What This Is:</strong> A quick demo showing how ratings from consistently good pickers count more. Think of it like movie critics—if someone keeps recommending movies you end up loving, you trust their opinion more next time. This system does that automatically.</p>
       
-      <p style="margin-top: 10px;"><strong>How It Works:</strong> We start by treating all users equally. Then, in each iteration, we compute content quality scores weighted by user reliability, and update user reliabilities based on how well their ratings align with the estimated content quality. Users who consistently rate high-quality content highly gain influence, while those with poor or adversarial rating patterns lose influence.</p>
+      <p style="margin-top: 15px;"><strong>The Big Idea:</strong> People who pick good stuff get a bigger megaphone. People who often miss get a smaller one.</p>
+    </div>
+    
+    <div style="background: #e8f5e9; border-left: 5px solid #4caf50; padding: 20px; margin: 25px 0; border-radius: 5px;">
+      <h3 style="color: #2e7d32; margin-top: 0; font-size: 1.4em;">🚀 60-Second Tour</h3>
+      <p><strong>How it works in 3 steps:</strong></p>
+      <ol style="margin: 15px 0 15px 25px;">
+        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Start:</strong> Everyone's voice is the same size</li>
+        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Combine:</strong> We mix everyone's ratings to get a quality score for each item</li>
+        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Adjust:</strong> People who often agree with the final quality get a bigger voice next round. Others get a smaller one</li>
+      </ol>
+      <p style="margin-top: 15px;"><strong>What to look for:</strong> See how sharp pickers gain influence and random or opposite raters fade.</p>
+    </div>
+    
+    <div style="background: #fff3e0; border-left: 5px solid #ff9800; padding: 20px; margin: 25px 0; border-radius: 5px;">
+      <h3 style="color: #e65100; margin-top: 0; font-size: 1.3em;">💡 Try This</h3>
+      <ul style="margin: 15px 0 0 25px;">
+        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Slide "Noise in ratings" high</strong> → Watch trust scores flatten out</li>
+        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Turn on "Colluding group"</strong> → See how weighted rankings differ</li>
+        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Raise "Strictness"</strong> → Trust spreads out more quickly</li>
+      </ul>
     </div>
     
     <div class="warning">
-      <strong>⚠️ Important Disclaimer:</strong> This is an <strong>educational mockup</strong> to explain a concept, not a production system. The "quality" scores are based on consistency within the simulated data, not universal truth. Real-world systems face complex challenges including cold-start problems, echo chambers, adversarial attacks, and value subjectivity. This demo uses synthetic data to illustrate mechanics, not to make normative judgments about quality.
+      <strong>⚠️ Important Note:</strong> This is a teaching tool, not a real system. The scores show who's consistent within this small simulation, not absolute truth or taste. The "quality" scores are based on consistency within the simulated data, not universal truth. Real-world systems face complex challenges including cold-start problems, echo chambers, adversarial attacks, and value subjectivity. This demo uses synthetic data to illustrate mechanics, not to make normative judgments about quality.
     </div>
     
     <h2>Interactive Controls</h2>
     <div class="controls">
-      <h3>Simulation Parameters</h3>
+      <h3>Simulation Settings</h3>
       <div class="control-group">
-        <label for="numUsers">Number of Users:</label>
+        <label for="numUsers">Number of Users</label>
         <input type="range" id="numUsers" min="15" max="50" value="25" step="1">
         <span class="value" id="numUsersValue">25</span>
       </div>
       <div class="control-group">
-        <label for="numContent">Number of Content Items:</label>
+        <label for="numContent">Number of Items</label>
         <input type="range" id="numContent" min="20" max="80" value="40" step="5">
         <span class="value" id="numContentValue">40</span>
       </div>
       <div class="control-group">
-        <label for="ratingDensity">Rating Density (%):</label>
+        <label for="ratingDensity">How many ratings exist (%)</label>
         <input type="range" id="ratingDensity" min="20" max="80" value="40" step="5">
         <span class="value" id="ratingDensityValue">40%</span>
       </div>
       <div class="control-group">
-        <label for="noiseLevel">Noise Level:</label>
+        <label for="noiseLevel">Noise in ratings
+          <span class="tooltip">?
+            <span class="tooltiptext">How much randomness in people's ratings. Higher = more unpredictable</span>
+          </span>
+        </label>
         <input type="range" id="noiseLevel" min="0.05" max="0.3" value="0.15" step="0.01">
         <span class="value" id="noiseLevelValue">0.15</span>
       </div>
       
-      <h3>Algorithm Parameters</h3>
+      <h3>How the System Learns</h3>
       <div class="control-group">
-        <label for="damping">Damping Factor (γ):</label>
+        <label for="damping">Trust update speed
+          <span class="tooltip">?
+            <span class="tooltiptext">How fast trust changes each round. Lower = slower and more stable. Higher = faster and more reactive</span>
+          </span>
+        </label>
         <input type="range" id="damping" min="0.1" max="0.9" value="0.3" step="0.05">
         <span class="value" id="dampingValue">0.3</span>
       </div>
       <div class="control-group">
-        <label for="alpha">Alignment Exponent (α):</label>
+        <label for="alpha">Strictness
+          <span class="tooltip">?
+            <span class="tooltiptext">How picky we are when giving or taking trust. Higher = bigger rewards for good pickers, bigger penalties for bad ones</span>
+          </span>
+        </label>
         <input type="range" id="alpha" min="1" max="4" value="2" step="0.5">
         <span class="value" id="alphaValue">2</span>
       </div>
       <div class="control-group">
-        <label for="rMin">Min Reliability (r_min):</label>
+        <label for="rMin">Min influence per rater</label>
         <input type="range" id="rMin" min="0.01" max="0.2" value="0.05" step="0.01">
         <span class="value" id="rMinValue">0.05</span>
       </div>
       <div class="control-group">
-        <label for="rMax">Max Reliability (r_max):</label>
+        <label for="rMax">Max influence per rater</label>
         <input type="range" id="rMax" min="1.5" max="3" value="2" step="0.1">
         <span class="value" id="rMaxValue">2.0</span>
       </div>
       <div class="control-group">
-        <label for="maxIterations">Max Iterations:</label>
+        <label for="maxIterations">Number of rounds</label>
         <input type="range" id="maxIterations" min="5" max="50" value="20" step="1">
         <span class="value" id="maxIterationsValue">20</span>
       </div>
@@ -297,72 +382,78 @@
       
       <div class="stats" id="statsContainer"></div>
       
-      <h3>Content Rankings Comparison</h3>
+      <h3>Rankings Comparison: Before vs After</h3>
+      <p style="margin: 10px 0; color: #666;">See how the weighted system produces a different (and usually more accurate) ranking than simple averaging.</p>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
         <div>
-          <h4 style="text-align: center; color: #e74c3c;">❌ Unweighted (Naive Average)</h4>
+          <h4 style="text-align: center; color: #e74c3c;">❌ Unweighted (Simple Average)</h4>
           <table id="unweightedTable"></table>
+          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.9em;">
+            <strong>What this shows:</strong> Top items ranked by simple average of all ratings. Everyone's opinion counts equally.
+          </div>
         </div>
         <div>
-          <h4 style="text-align: center; color: #27ae60;">✅ Weighted (Trust-Based)</h4>
+          <h4 style="text-align: center; color: #27ae60;">✅ Weighted (Smart System)</h4>
           <table id="weightedTable"></table>
+          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.9em;">
+            <strong>What this shows:</strong> Top items ranked using trust scores. Better pickers' opinions count more.
+          </div>
         </div>
       </div>
       
-      <h3>User Reliabilities</h3>
+      <h3>Trust Scores (Who Gets a Bigger Megaphone)</h3>
       <table id="userTable"></table>
+      <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.9em;">
+        <strong>What this shows:</strong> Each person's trust score. Higher = bigger megaphone. See how sharp pickers get more influence.
+      </div>
       
-      <h3>Visualizations</h3>
+      <h3>Visual Breakdown</h3>
       <div class="charts-grid">
         <div class="chart-container">
-          <h4>Reliability Distribution</h4>
+          <h4>Trust Score Distribution</h4>
           <canvas id="reliabilityChart" width="500" height="300"></canvas>
+          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.95em;">
+            <strong>What this says:</strong> How trust scores spread across all users. Good systems show a range, with the best pickers clearly standing out.
+          </div>
         </div>
         <div class="chart-container">
-          <h4>User Reliability vs Rating Error</h4>
+          <h4>Trust Score vs Rating Error</h4>
           <canvas id="errorChart" width="500" height="300"></canvas>
+          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.95em;">
+            <strong>What this says:</strong> Users who make bigger rating mistakes (right side) get lower trust (bottom). Accurate raters (left side) get higher trust (top).
+          </div>
         </div>
       </div>
       
       <div class="chart-container">
-        <h4>Convergence Over Iterations</h4>
+        <h4>How Trust Scores Changed Over Rounds</h4>
         <canvas id="convergenceChart" width="1000" height="300"></canvas>
+        <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.95em;">
+          <strong>What this says:</strong> Changes get smaller each round as the system stabilizes. When lines flatten, we've found a stable answer.
+        </div>
       </div>
     </div>
     
-    <h2>How It Works: Algorithm Explanation</h2>
-    <div>
-      <h3>1. Initialization</h3>
-      <p>All users start with equal reliability <code>r_i = 1.0</code>. Content has no initial scores.</p>
-      
-      <h3>2. Iterative Updates</h3>
-      <p><strong>Step A: Compute Content Scores</strong></p>
-      <p>For each content item j, calculate a weighted average of ratings:</p>
-      <p style="margin-left: 30px;"><code>q_j = (Σ r_i × rating_ij) / (Σ r_i)</code></p>
-      <p>where the sum is over all users i who rated content j.</p>
-      
-      <p style="margin-top: 15px;"><strong>Step B: Update User Reliabilities</strong></p>
-      <p>For each user i, calculate alignment with content scores:</p>
-      <p style="margin-left: 30px;"><code>A_i = average of (1 - |rating_ij - q_j|)</code></p>
-      <p>Then update reliability with damping:</p>
-      <p style="margin-left: 30px;"><code>r_i = (1-γ)×r_i + γ×[r_min + (r_max-r_min)×A_i^α]</code></p>
-      
-      <h3>3. Convergence</h3>
-      <p>Repeat until changes in scores and reliabilities are small, or max iterations reached.</p>
-    </div>
-    
-    <h2>User Types in Simulation</h2>
+    <h2>What This Demo Shows</h2>
     <ul>
-      <li><strong class="highlight">Discerning Users (25%):</strong> Rate accurately with minimal noise. These users should gain high reliability.</li>
-      <li><strong>Average Users (30%):</strong> Rate reasonably well with moderate noise.</li>
-      <li><strong class="lowlight">Contrarian Users (15%):</strong> Systematically rate good content low and bad content high. Should lose reliability.</li>
-      <li><strong class="lowlight">Random Users (20%):</strong> Rate without regard to quality. Should lose reliability.</li>
-      <li><strong class="lowlight">Colluding Users (10%):</strong> Artificially inflate ratings for specific content. Should lose reliability.</li>
+      <li><strong>Core idea:</strong> In ratings, not every rater is equally helpful. People who often spot quality get more say.</li>
+      <li><strong>How it works:</strong> We run a few rounds. Each round, items get scored using everyone's current voice size. Then we adjust voice sizes based on who matched the final scores.</li>
+      <li><strong>Why it helps:</strong> It reduces the effect of random guesses, mistakes, or coordinated hype.</li>
+      <li><strong>What it doesn't do:</strong> It doesn't decide absolute truth or taste. It just rewards consistency inside this small simulation.</li>
+    </ul>
+    
+    <h2>Meet the Raters</h2>
+    <ul>
+      <li><strong style="color: #27ae60;">Sharpshooter Sam (25%)</strong> – Consistently on target with minimal mistakes. Should gain high trust.</li>
+      <li><strong style="color: #3498db;">Average Alex (30%)</strong> – Usually close, sometimes a bit off. Gets medium trust.</li>
+      <li><strong style="color: #e74c3c;">Opposite Olive (15%)</strong> – Likes the misses, dislikes the hits. Should lose trust.</li>
+      <li><strong style="color: #95a5a6;">Random Riley (20%)</strong> – Coin-flip ratings, no pattern. Should lose trust.</li>
+      <li><strong style="color: #e67e22;">Crew C (10%)</strong> – Boosting each other's favorite items. Trust depends on alignment with the crowd.</li>
     </ul>
     
     <h2>Limitations & Safeguards</h2>
     <div class="warning">
-      <h3>Known Limitations:</h3>
+      <h3>Things This Simple Demo Doesn't Handle:</h3>
       <ul>
         <li><strong>Cold Start:</strong> New users and content have insufficient data. Priors (starting values) and minimum rating thresholds help mitigate this.</li>
         <li><strong>Echo Chambers:</strong> The system can amplify dominant opinions. Diversity constraints and reliability caps (r_max) help limit this.</li>
@@ -371,11 +462,11 @@
         <li><strong>Feedback Loops:</strong> Reliability affects scores, which affect reliability. Damping and bounded reliability prevent runaway effects.</li>
       </ul>
       
-      <h3>Mitigations Used:</h3>
+      <h3>Safety Features Built In:</h3>
       <ul>
         <li>Bounded reliability (<code>r_min</code> to <code>r_max</code>) prevents extreme weighting</li>
-        <li>Damping factor <code>γ</code> slows updates and improves stability</li>
-        <li>Exponent <code>α</code> makes the reliability function non-linear, rewarding consistency</li>
+        <li>Trust update speed slows changes and improves stability</li>
+        <li>Strictness setting makes the trust function non-linear, rewarding consistency</li>
         <li>Small epsilon prevents division by zero</li>
       </ul>
     </div>
@@ -386,17 +477,9 @@
       <li>No server, build tools, or external dependencies required</li>
       <li>Adjust the parameters using the sliders above</li>
       <li>Click "Run Simulation" to generate new data and see results</li>
-      <li>Observe how different user types gain or lose reliability</li>
+      <li>Observe how different user types gain or lose trust score</li>
       <li>Compare unweighted vs weighted content rankings</li>
     </ol>
-    
-    <h2>Alternative Approaches (Brief Overview)</h2>
-    <ul>
-      <li><strong>EigenTrust / PageRank:</strong> Use eigenvector centrality on the trust graph; more resistant to collusion but computationally heavier.</li>
-      <li><strong>HITS Algorithm:</strong> Treat users as "authorities" and content as "hubs" in a bipartite graph; similar iterative approach with different update rules.</li>
-      <li><strong>Bayesian Hierarchical Models:</strong> Model user bias and noise as distributions; provides uncertainty estimates but requires MCMC or variational inference.</li>
-      <li><strong>Matrix Factorization:</strong> Factor user-content rating matrix to discover latent quality dimensions; good for prediction but less interpretable.</li>
-    </ul>
     
     <div style="margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 5px; text-align: center;">
       <p><strong>Remember:</strong> This is a demonstration of a concept, not a production-ready system. Real-world implementations require extensive testing, safeguards, and ethical considerations.</p>
@@ -491,8 +574,8 @@
             id: userId++,
             type: type.name,
             noise: type.noise * params.noiseLevel,
-            reliability: 1.0,
-            initialReliability: 1.0
+            trustScore: 1.0,
+            initialTrustScore: 1.0
           });
         }
       });
@@ -583,8 +666,8 @@
         ratings.forEach(r => {
           if (r.contentId === item.id) {
             const user = users[r.userId];
-            weightedSum += user.reliability * r.rating;
-            weightSum += user.reliability;
+            weightedSum += user.trustScore * r.rating;
+            weightSum += user.trustScore;
             unweightedSum += r.rating;
             count++;
           }
@@ -620,7 +703,7 @@
             (params.rMax - params.rMin) * Math.pow(avgAlignment, params.alpha);
           
           // Apply damping
-          user.reliability = (1 - params.damping) * user.reliability + 
+          user.trustScore = (1 - params.damping) * user.trustScore + 
                             params.damping * newReliability;
         }
       });
@@ -634,12 +717,12 @@
       };
       
       // Initialize
-      users.forEach(user => user.reliability = 1.0);
+      users.forEach(user => user.trustScore = 1.0);
       
       for (let iter = 0; iter < params.maxIterations; iter++) {
         // Store previous values
         const prevScores = content.map(c => c.score);
-        const prevReliabilities = users.map(u => u.reliability);
+        const prevReliabilities = users.map(u => u.trustScore);
         
         // Update
         computeContentScores();
@@ -654,11 +737,11 @@
         
         let deltaR = 0;
         users.forEach((user, i) => {
-          deltaR += Math.abs(user.reliability - prevReliabilities[i]);
+          deltaR += Math.abs(user.trustScore - prevReliabilities[i]);
         });
         deltaR /= users.length;
         
-        const meanR = users.reduce((sum, u) => sum + u.reliability, 0) / users.length;
+        const meanR = users.reduce((sum, u) => sum + u.trustScore, 0) / users.length;
         
         history.deltaQ.push(deltaQ);
         history.deltaR.push(deltaR);
@@ -1000,7 +1083,7 @@
       document.getElementById('weightedTable').innerHTML = tableHeader + makeTableRows(sortedByWeighted, true);
       
       // User reliability table
-      const sortedUsers = [...users].sort((a, b) => b.reliability - a.reliability);
+      const sortedUsers = [...users].sort((a, b) => b.trustScore - a.trustScore);
       
       const userRows = sortedUsers.map((user, idx) => {
         const numRatings = ratings.filter(r => r.userId === user.id).length;
@@ -1017,14 +1100,14 @@
         });
         const avgError = errorCount > 0 ? errorSum / errorCount : 0;
         
-        const reliabilityClass = user.reliability > 1.2 ? 'highlight' : (user.reliability < 0.3 ? 'lowlight' : '');
+        const reliabilityClass = user.trustScore > 1.2 ? 'highlight' : (user.trustScore < 0.3 ? 'lowlight' : '');
         
         return `
           <tr>
             <td>${idx + 1}</td>
             <td>User ${user.id}</td>
             <td>${user.type}</td>
-            <td class="${reliabilityClass}">${user.reliability.toFixed(3)}</td>
+            <td class="${reliabilityClass}">${user.trustScore.toFixed(3)}</td>
             <td>${avgError.toFixed(3)}</td>
             <td>${numRatings}</td>
           </tr>
@@ -1036,7 +1119,7 @@
           <th>Rank</th>
           <th>ID</th>
           <th>Type</th>
-          <th>Reliability</th>
+          <th>trust score</th>
           <th>Avg Error</th>
           <th># Ratings</th>
         </tr>
@@ -1046,7 +1129,7 @@
       // Reliability distribution
       const reliabilityBins = Array(20).fill(0);
       users.forEach(user => {
-        const bin = Math.floor((user.reliability - params.rMin) / (params.rMax - params.rMin) * 19);
+        const bin = Math.floor((user.trustScore - params.rMin) / (params.rMax - params.rMin) * 19);
         const clampedBin = Math.max(0, Math.min(19, bin));
         reliabilityBins[clampedBin]++;
       });
@@ -1088,7 +1171,7 @@
         };
         
         return {
-          x: user.reliability,
+          x: user.trustScore,
           y: avgError,
           color: colors[user.type] || '#3498db'
         };
