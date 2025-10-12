@@ -13,7 +13,7 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.6;
+      line-height: 1.7;
       color: #333;
       background: #f5f5f5;
       padding: 20px;
@@ -30,13 +30,20 @@
     
     h1 {
       color: #2c3e50;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       font-size: 2.5em;
+    }
+    
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 1.2em;
+      margin-bottom: 25px;
+      font-style: italic;
     }
     
     h2 {
       color: #34495e;
-      margin-top: 30px;
+      margin-top: 35px;
       margin-bottom: 15px;
       font-size: 1.8em;
       border-bottom: 2px solid #3498db;
@@ -51,60 +58,143 @@
     }
     
     .intro {
-      background: #ecf0f1;
-      padding: 20px;
-      border-radius: 5px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
       margin-bottom: 30px;
+      font-size: 1.05em;
+    }
+    
+    .intro strong {
+      color: #fff;
       font-size: 1.1em;
+    }
+    
+    .quick-start {
+      background: #e8f5e9;
+      border-left: 5px solid #4caf50;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 5px;
+    }
+    
+    .quick-start h3 {
+      color: #2e7d32;
+      margin-top: 0;
+      font-size: 1.4em;
+    }
+    
+    .quick-start ol {
+      margin: 15px 0 15px 25px;
+    }
+    
+    .quick-start li {
+      margin: 10px 0;
+      font-size: 1.05em;
     }
     
     .warning {
       background: #fff3cd;
       border-left: 4px solid #ffc107;
-      padding: 15px;
+      padding: 18px;
       margin: 20px 0;
+      border-radius: 5px;
+    }
+    
+    .round-control {
+      background: #e3f2fd;
+      border: 2px solid #2196f3;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 30px 0;
+    }
+    
+    .round-control h3 {
+      margin-top: 0;
+      color: #1976d2;
+    }
+    
+    .round-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    
+    .round-slider {
+      width: 100%;
+      margin: 15px 0;
+    }
+    
+    .round-label {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #1976d2;
+      text-align: center;
+      margin: 10px 0;
+    }
+    
+    .round-summary {
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      font-style: italic;
+      border-left: 4px solid #2196f3;
     }
     
     .controls {
       background: #f8f9fa;
-      padding: 20px;
-      border-radius: 5px;
+      padding: 25px;
+      border-radius: 8px;
       margin: 20px 0;
+      border: 1px solid #dee2e6;
     }
     
     .control-group {
-      margin: 15px 0;
+      margin: 18px 0;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     
     .control-group label {
-      min-width: 200px;
+      min-width: 250px;
       font-weight: 600;
+      font-size: 1.05em;
     }
     
     .control-group input[type="range"] {
       flex: 1;
       max-width: 300px;
+      height: 6px;
     }
     
     .control-group .value {
-      min-width: 60px;
+      min-width: 70px;
       text-align: right;
       font-family: monospace;
+      font-size: 1.05em;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    
+    .control-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
     }
     
     button {
       background: #3498db;
       color: white;
       border: none;
-      padding: 12px 24px;
+      padding: 12px 20px;
       border-radius: 5px;
       cursor: pointer;
       font-size: 1em;
       font-weight: 600;
-      margin: 10px 5px;
       transition: background 0.3s;
     }
     
@@ -116,51 +206,12 @@
       transform: translateY(1px);
     }
     
-    .charts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 20px;
-      margin: 20px 0;
+    button.secondary {
+      background: #95a5a6;
     }
     
-    .chart-container {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 15px;
-    }
-    
-    canvas {
-      max-width: 100%;
-      height: auto;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      font-size: 0.9em;
-    }
-    
-    th {
-      background: #34495e;
-      color: white;
-      padding: 12px;
-      text-align: left;
-      font-weight: 600;
-    }
-    
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    tr:nth-child(even) {
-      background: #f8f9fa;
-    }
-    
-    tr:hover {
-      background: #e9ecef;
+    button.secondary:hover {
+      background: #7f8c8d;
     }
     
     .stats {
@@ -189,37 +240,32 @@
       opacity: 0.9;
     }
     
-    .loading {
-      text-align: center;
-      padding: 20px;
-      color: #666;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95em;
     }
     
-    ul {
-      margin: 10px 0 10px 30px;
+    th {
+      background: #34495e;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
     }
     
-    li {
-      margin: 5px 0;
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #ddd;
     }
     
-    code {
-      background: #f4f4f4;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: monospace;
+    tr:nth-child(even) {
+      background: #f8f9fa;
     }
     
-    .highlight {
-      background: #d4edda;
-      padding: 2px 4px;
-      border-radius: 3px;
-    }
-    
-    .lowlight {
-      background: #f8d7da;
-      padding: 2px 4px;
-      border-radius: 3px;
+    tr:hover {
+      background: #e9ecef;
     }
     
     .tooltip {
@@ -278,7 +324,7 @@
 <body>
   <div class="container">
     <h1><span style="font-size: 1.5em; margin-right: 10px;">📢</span> Smart Ratings Demo</h1>
-    <div style="color: #7f8c8d; font-size: 1.2em; margin-bottom: 25px; font-style: italic;">The Megaphone Effect: Better Pickers Get a Bigger Voice</div>
+    <div class="subtitle">The Megaphone Effect: Better Pickers Get a Bigger Voice</div>
     
     <div class="intro">
       <p><strong>What This Is:</strong> A quick demo showing how ratings from consistently good pickers count more. Think of it like movie critics—if someone keeps recommending movies you end up loving, you trust their opinion more next time. This system does that automatically.</p>
@@ -286,47 +332,97 @@
       <p style="margin-top: 15px;"><strong>The Big Idea:</strong> People who pick good stuff get a bigger megaphone. People who often miss get a smaller one.</p>
     </div>
     
-    <div style="background: #e8f5e9; border-left: 5px solid #4caf50; padding: 20px; margin: 25px 0; border-radius: 5px;">
-      <h3 style="color: #2e7d32; margin-top: 0; font-size: 1.4em;">🚀 60-Second Tour</h3>
+    <div class="quick-start">
+      <h3>🚀 60-Second Tour</h3>
       <p><strong>How it works in 3 steps:</strong></p>
-      <ol style="margin: 15px 0 15px 25px;">
-        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Start:</strong> Everyone's voice is the same size</li>
-        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Combine:</strong> We mix everyone's ratings to get a quality score for each item</li>
-        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Adjust:</strong> People who often agree with the final quality get a bigger voice next round. Others get a smaller one</li>
+      <ol>
+        <li><strong>Start:</strong> Everyone's voice is the same size (Round 0)</li>
+        <li><strong>Combine:</strong> We mix everyone's ratings to get a quality score for each item</li>
+        <li><strong>Adjust:</strong> People who often agree with the final quality get a bigger voice next round. Others get a smaller one</li>
       </ol>
-      <p style="margin-top: 15px;"><strong>What to look for:</strong> See how sharp pickers gain influence and random or opposite raters fade.</p>
-    </div>
-    
-    <div style="background: #fff3e0; border-left: 5px solid #ff9800; padding: 20px; margin: 25px 0; border-radius: 5px;">
-      <h3 style="color: #e65100; margin-top: 0; font-size: 1.3em;">💡 Try This</h3>
-      <ul style="margin: 15px 0 0 25px;">
-        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Slide "Noise in ratings" high</strong> → Watch trust scores flatten out</li>
-        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Turn on "Colluding group"</strong> → See how weighted rankings differ</li>
-        <li style="margin: 10px 0; font-size: 1.05em;"><strong>Raise "Strictness"</strong> → Trust spreads out more quickly</li>
-      </ul>
+      <p style="margin-top: 15px;"><strong>What to look for:</strong> Step through the rounds below and see how sharp pickers gain influence while random or opposite raters fade.</p>
     </div>
     
     <div class="warning">
-      <strong>⚠️ Important Note:</strong> This is a teaching tool, not a real system. The scores show who's consistent within this small simulation, not absolute truth or taste. The "quality" scores are based on consistency within the simulated data, not universal truth. Real-world systems face complex challenges including cold-start problems, echo chambers, adversarial attacks, and value subjectivity. This demo uses synthetic data to illustrate mechanics, not to make normative judgments about quality.
+      <strong>⚠️ Important Note:</strong> This is a teaching tool, not a real system. We're using exactly 10 named people and 4 items to make it easy to follow. The scores show who's consistent within this small simulation, not absolute truth or taste.
+    </div>
+
+    <h2>Round-by-Round Stepper</h2>
+    
+    <div class="round-control">
+      <h3>Navigate Through the Rounds</h3>
+      <div class="round-label" id="roundLabel">Round 0 of 8</div>
+      
+      <div class="round-buttons">
+        <button onclick="resetRound()">⏮ Reset to Start</button>
+        <button onclick="prevRound()">⏪ Previous</button>
+        <button id="playBtn" onclick="togglePlay()">▶ Play</button>
+        <button onclick="nextRound()">Next ⏩</button>
+      </div>
+      
+      <input type="range" class="round-slider" id="roundSlider" min="0" max="8" value="0" step="1">
+      
+      <div class="round-summary" id="roundSummary">
+        Starting point: Everyone has equal voice (trust score = 1.0)
+      </div>
     </div>
     
-    <h2>Interactive Controls</h2>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Average Trust</div>
+        <div class="stat-value" id="avgTrustStat">1.000</div>
+      </div>
+      <div class="stat-card" style="background: #e74c3c;">
+        <div class="stat-label">Trust Score Spread</div>
+        <div class="stat-value" id="spreadStat">0.000</div>
+      </div>
+    </div>
+
+    <div id="results">
+      <h3>People and Their Trust Scores</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Trust Score</th>
+            <th>Change</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+        </tbody>
+      </table>
+      
+      <h3>Items and Their Quality Scores</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>True Quality</th>
+            <th>Weighted Score</th>
+            <th>Unweighted Avg</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody id="itemTableBody">
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Settings</h2>
     <div class="controls">
-      <h3>Simulation Settings</h3>
+      <p style="margin-bottom: 20px;"><strong>Note:</strong> This demo uses exactly 10 people and 4 items. You can adjust how the algorithm learns below.</p>
+      
+      <h3>How the System Learns</h3>
       <div class="control-group">
-        <label for="numUsers">Number of Users</label>
-        <input type="range" id="numUsers" min="15" max="50" value="25" step="1">
-        <span class="value" id="numUsersValue">25</span>
-      </div>
-      <div class="control-group">
-        <label for="numContent">Number of Items</label>
-        <input type="range" id="numContent" min="20" max="80" value="40" step="5">
-        <span class="value" id="numContentValue">40</span>
-      </div>
-      <div class="control-group">
-        <label for="ratingDensity">How many ratings exist (%)</label>
-        <input type="range" id="ratingDensity" min="20" max="80" value="40" step="5">
-        <span class="value" id="ratingDensityValue">40%</span>
+        <label for="ratingDensity">How many ratings exist (%)
+          <span class="tooltip">?
+            <span class="tooltiptext">Percentage of all possible ratings that actually exist. Higher means more data</span>
+          </span>
+        </label>
+        <input type="range" id="ratingDensity" min="30" max="90" value="60" step="5">
+        <span class="value" id="ratingDensityValue">60%</span>
       </div>
       <div class="control-group">
         <label for="noiseLevel">Noise in ratings
@@ -337,905 +433,527 @@
         <input type="range" id="noiseLevel" min="0.05" max="0.3" value="0.15" step="0.01">
         <span class="value" id="noiseLevelValue">0.15</span>
       </div>
-      
-      <h3>How the System Learns</h3>
       <div class="control-group">
         <label for="damping">Trust update speed
           <span class="tooltip">?
-            <span class="tooltiptext">How fast trust changes each round. Lower = slower and more stable. Higher = faster and more reactive</span>
+            <span class="tooltiptext">How fast trust changes each round. Lower = slower and more stable</span>
           </span>
         </label>
         <input type="range" id="damping" min="0.1" max="0.9" value="0.3" step="0.05">
-        <span class="value" id="dampingValue">0.3</span>
+        <span class="value" id="dampingValue">30%</span>
       </div>
       <div class="control-group">
         <label for="alpha">Strictness
           <span class="tooltip">?
-            <span class="tooltiptext">How picky we are when giving or taking trust. Higher = bigger rewards for good pickers, bigger penalties for bad ones</span>
+            <span class="tooltiptext">How picky we are when giving or taking trust. Higher = bigger rewards/penalties</span>
           </span>
         </label>
         <input type="range" id="alpha" min="1" max="4" value="2" step="0.5">
         <span class="value" id="alphaValue">2</span>
       </div>
       <div class="control-group">
-        <label for="rMin">Min influence per rater</label>
+        <label for="rMin">Min influence per rater
+          <span class="tooltip">?
+            <span class="tooltiptext">Lower bound on any one person's voice</span>
+          </span>
+        </label>
         <input type="range" id="rMin" min="0.01" max="0.2" value="0.05" step="0.01">
         <span class="value" id="rMinValue">0.05</span>
       </div>
       <div class="control-group">
-        <label for="rMax">Max influence per rater</label>
+        <label for="rMax">Max influence per rater
+          <span class="tooltip">?
+            <span class="tooltiptext">Upper bound on any one person's voice</span>
+          </span>
+        </label>
         <input type="range" id="rMax" min="1.5" max="3" value="2" step="0.1">
         <span class="value" id="rMaxValue">2.0</span>
       </div>
+      
+      <h3>Collusion Test</h3>
       <div class="control-group">
-        <label for="maxIterations">Number of rounds</label>
-        <input type="range" id="maxIterations" min="5" max="50" value="20" step="1">
-        <span class="value" id="maxIterationsValue">20</span>
+        <label for="enableColluding">
+          <input type="checkbox" id="enableColluding" checked>
+          Enable colluding group
+          <span class="tooltip">?
+            <span class="tooltiptext">When checked, Booster Bea and Ben will try to boost certain items</span>
+          </span>
+        </label>
+      </div>
+      <div class="control-group">
+        <label for="collusionBoost">Collusion boost
+          <span class="tooltip">?
+            <span class="tooltiptext">How strongly the colluders overrate their target items</span>
+          </span>
+        </label>
+        <input type="range" id="collusionBoost" min="0.1" max="0.5" value="0.3" step="0.05">
+        <span class="value" id="collusionBoostValue">0.30</span>
       </div>
       
-      <button onclick="runSimulation()">🔄 Run Simulation</button>
-      <button onclick="resetToDefaults()">↺ Reset to Defaults</button>
-    </div>
-    
-    <div id="results" style="display: none;">
-      <h2>Results</h2>
-      
-      <div class="stats" id="statsContainer"></div>
-      
-      <h3>Rankings Comparison: Before vs After</h3>
-      <p style="margin: 10px 0; color: #666;">See how the weighted system produces a different (and usually more accurate) ranking than simple averaging.</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div>
-          <h4 style="text-align: center; color: #e74c3c;">❌ Unweighted (Simple Average)</h4>
-          <table id="unweightedTable"></table>
-          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.9em;">
-            <strong>What this shows:</strong> Top items ranked by simple average of all ratings. Everyone's opinion counts equally.
-          </div>
-        </div>
-        <div>
-          <h4 style="text-align: center; color: #27ae60;">✅ Weighted (Smart System)</h4>
-          <table id="weightedTable"></table>
-          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.9em;">
-            <strong>What this shows:</strong> Top items ranked using trust scores. Better pickers' opinions count more.
-          </div>
-        </div>
-      </div>
-      
-      <h3>Trust Scores (Who Gets a Bigger Megaphone)</h3>
-      <table id="userTable"></table>
-      <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.9em;">
-        <strong>What this shows:</strong> Each person's trust score. Higher = bigger megaphone. See how sharp pickers get more influence.
-      </div>
-      
-      <h3>Visual Breakdown</h3>
-      <div class="charts-grid">
-        <div class="chart-container">
-          <h4>Trust Score Distribution</h4>
-          <canvas id="reliabilityChart" width="500" height="300"></canvas>
-          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.95em;">
-            <strong>What this says:</strong> How trust scores spread across all users. Good systems show a range, with the best pickers clearly standing out.
-          </div>
-        </div>
-        <div class="chart-container">
-          <h4>Trust Score vs Rating Error</h4>
-          <canvas id="errorChart" width="500" height="300"></canvas>
-          <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.95em;">
-            <strong>What this says:</strong> Users who make bigger rating mistakes (right side) get lower trust (bottom). Accurate raters (left side) get higher trust (top).
-          </div>
-        </div>
-      </div>
-      
-      <div class="chart-container">
-        <h4>How Trust Scores Changed Over Rounds</h4>
-        <canvas id="convergenceChart" width="1000" height="300"></canvas>
-        <div style="font-style: italic; color: #666; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 0.95em;">
-          <strong>What this says:</strong> Changes get smaller each round as the system stabilizes. When lines flatten, we've found a stable answer.
-        </div>
+      <div style="margin-top: 25px;">
+        <button onclick="runSimulation()">🔄 Re-run with Current Settings</button>
+        <button class="secondary" onclick="reseed()">🎲 Reseed (New Random Data)</button>
+        <button class="secondary" onclick="resetToDefaults()">↺ Reset to Defaults</button>
       </div>
     </div>
-    
-    <h2>What This Demo Shows</h2>
-    <ul>
-      <li><strong>Core idea:</strong> In ratings, not every rater is equally helpful. People who often spot quality get more say.</li>
-      <li><strong>How it works:</strong> We run a few rounds. Each round, items get scored using everyone's current voice size. Then we adjust voice sizes based on who matched the final scores.</li>
-      <li><strong>Why it helps:</strong> It reduces the effect of random guesses, mistakes, or coordinated hype.</li>
-      <li><strong>What it doesn't do:</strong> It doesn't decide absolute truth or taste. It just rewards consistency inside this small simulation.</li>
+
+    <h2>Meet the People</h2>
+    <p><strong>This demo uses exactly 10 named people:</strong></p>
+    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+      <li><strong style="color: #27ae60;">Sharpshooter Sam & Careful Casey</strong> (discerning) – Consistently on target</li>
+      <li><strong style="color: #3498db;">Steady Jordan, Average Alex & Helper Harper</strong> (average) – Usually close</li>
+      <li><strong style="color: #e74c3c;">Opposite Olive & Contrary Nico</strong> (contrarian) – Like the misses</li>
+      <li><strong style="color: #95a5a6;">Random Riley</strong> (random) – Coin-flip ratings</li>
+      <li><strong style="color: #e67e22;">Booster Bea & Booster Ben</strong> (colluders) – Try to boost certain items</li>
     </ul>
     
-    <h2>Meet the Raters</h2>
-    <ul>
-      <li><strong style="color: #27ae60;">Sharpshooter Sam (25%)</strong> – Consistently on target with minimal mistakes. Should gain high trust.</li>
-      <li><strong style="color: #3498db;">Average Alex (30%)</strong> – Usually close, sometimes a bit off. Gets medium trust.</li>
-      <li><strong style="color: #e74c3c;">Opposite Olive (15%)</strong> – Likes the misses, dislikes the hits. Should lose trust.</li>
-      <li><strong style="color: #95a5a6;">Random Riley (20%)</strong> – Coin-flip ratings, no pattern. Should lose trust.</li>
-      <li><strong style="color: #e67e22;">Crew C (10%)</strong> – Boosting each other's favorite items. Trust depends on alignment with the crowd.</li>
+    <h2>The 4 Items Being Rated</h2>
+    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+      <li><strong>Aurora Photo</strong></li>
+      <li><strong>Retro Keyboard Review</strong></li>
+      <li><strong>Indie Song</strong></li>
+      <li><strong>Short Documentary</strong></li>
     </ul>
     
-    <h2>Limitations & Safeguards</h2>
-    <div class="warning">
-      <h3>Things This Simple Demo Doesn't Handle:</h3>
-      <ul>
-        <li><strong>Cold Start:</strong> New users and content have insufficient data. Priors (starting values) and minimum rating thresholds help mitigate this.</li>
-        <li><strong>Echo Chambers:</strong> The system can amplify dominant opinions. Diversity constraints and reliability caps (r_max) help limit this.</li>
-        <li><strong>Adversarial Attacks:</strong> Coordinated voting can still manipulate scores, especially with low diversity. Real systems need anomaly detection, time-windowing, and rate limits.</li>
-        <li><strong>Value Subjectivity:</strong> "Quality" is contextual and cultural. This model optimizes for internal consistency, not universal truth.</li>
-        <li><strong>Feedback Loops:</strong> Reliability affects scores, which affect reliability. Damping and bounded reliability prevent runaway effects.</li>
-      </ul>
-      
-      <h3>Safety Features Built In:</h3>
-      <ul>
-        <li>Bounded reliability (<code>r_min</code> to <code>r_max</code>) prevents extreme weighting</li>
-        <li>Trust update speed slows changes and improves stability</li>
-        <li>Strictness setting makes the trust function non-linear, rewarding consistency</li>
-        <li>Small epsilon prevents division by zero</li>
-      </ul>
-    </div>
-    
-    <h2>How to Run This Demo</h2>
-    <ol>
-      <li>Simply open this HTML file in any modern web browser (Chrome, Firefox, Safari, Edge)</li>
-      <li>No server, build tools, or external dependencies required</li>
-      <li>Adjust the parameters using the sliders above</li>
-      <li>Click "Run Simulation" to generate new data and see results</li>
-      <li>Observe how different user types gain or lose trust score</li>
-      <li>Compare unweighted vs weighted content rankings</li>
+    <h2>How to Use This Demo</h2>
+    <ol style="margin: 20px 0 20px 30px; line-height: 2;">
+      <li>Use the <strong>Round Stepper</strong> above to navigate through Round 0 to Round 8</li>
+      <li>Watch how trust scores change as the system learns who's accurate</li>
+      <li>Click <strong>Play</strong> to automatically step through all rounds</li>
+      <li>Adjust settings and click <strong>Re-run</strong> to see how different parameters affect results</li>
+      <li>Click <strong>Reseed</strong> to generate completely new random ratings (same people and items)</li>
     </ol>
     
     <div style="margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 5px; text-align: center;">
-      <p><strong>Remember:</strong> This is a demonstration of a concept, not a production-ready system. Real-world implementations require extensive testing, safeguards, and ethical considerations.</p>
+      <p><strong>Remember:</strong> This is a demonstration with a tiny dataset (10 people, 4 items) to explain an idea. Real systems need thousands of users and items, plus extensive safeguards against manipulation.</p>
     </div>
   </div>
   
   <script>
+    // ==================== FIXED CONFIGURATION ====================
+    let SEED = 12345;
+    const MAX_ROUNDS = 8;
+    
+    const USER_NAMES = [
+      "Sharpshooter Sam",
+      "Careful Casey",
+      "Steady Jordan",
+      "Average Alex",
+      "Helper Harper",
+      "Opposite Olive",
+      "Contrary Nico",
+      "Random Riley",
+      "Booster Bea",
+      "Booster Ben"
+    ];
+    
+    const ITEM_TITLES = [
+      "Aurora Photo",
+      "Retro Keyboard Review",
+      "Indie Song",
+      "Short Documentary"
+    ];
+    
+    const USER_TYPE = {
+      "Sharpshooter Sam": "discerning",
+      "Careful Casey": "discerning",
+      "Steady Jordan": "average",
+      "Average Alex": "average",
+      "Helper Harper": "average",
+      "Opposite Olive": "contrarian",
+      "Contrary Nico": "contrarian",
+      "Random Riley": "random",
+      "Booster Bea": "colluder",
+      "Booster Ben": "colluder"
+    };
+    
+    // ==================== SEEDED RANDOM ====================
+    class SeededRandom {
+      constructor(seed) {
+        this.seed = seed;
+      }
+      
+      next() {
+        this.seed = (this.seed * 9301 + 49297) % 233280;
+        return this.seed / 233280;
+      }
+      
+      normal(mean = 0, stddev = 1) {
+        const u1 = this.next();
+        const u2 = this.next();
+        const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        return mean + z0 * stddev;
+      }
+    }
+    
+    let rng = new SeededRandom(SEED);
+    
     // ==================== DATA STRUCTURES ====================
     let users = [];
-    let content = [];
+    let items = [];
     let ratings = [];
+    let roundStates = [];
+    let currentRound = 0;
+    let isPlaying = false;
+    let playInterval = null;
     let params = {};
-    let results = {};
     
-    // ==================== INITIALIZATION ====================
+    // ==================== PARAMETERS ====================
     function initializeParams() {
       params = {
-        numUsers: parseInt(document.getElementById('numUsers').value),
-        numContent: parseInt(document.getElementById('numContent').value),
-        ratingDensity: parseInt(document.getElementById('ratingDensity').value) / 100,
+        ratingDensity: parseFloat(document.getElementById('ratingDensity').value) / 100,
         noiseLevel: parseFloat(document.getElementById('noiseLevel').value),
         damping: parseFloat(document.getElementById('damping').value),
         alpha: parseFloat(document.getElementById('alpha').value),
         rMin: parseFloat(document.getElementById('rMin').value),
         rMax: parseFloat(document.getElementById('rMax').value),
-        maxIterations: parseInt(document.getElementById('maxIterations').value),
+        colludingEnabled: document.getElementById('enableColluding').checked,
+        collusionBoost: parseFloat(document.getElementById('collusionBoost').value),
         epsilon: 1e-6
       };
     }
     
     function updateDisplayedValues() {
-      document.getElementById('numUsersValue').textContent = document.getElementById('numUsers').value;
-      document.getElementById('numContentValue').textContent = document.getElementById('numContent').value;
       document.getElementById('ratingDensityValue').textContent = document.getElementById('ratingDensity').value + '%';
       document.getElementById('noiseLevelValue').textContent = document.getElementById('noiseLevel').value;
-      document.getElementById('dampingValue').textContent = document.getElementById('damping').value;
+      const dampingPercent = Math.round(parseFloat(document.getElementById('damping').value) * 100);
+      document.getElementById('dampingValue').textContent = dampingPercent + '%';
       document.getElementById('alphaValue').textContent = document.getElementById('alpha').value;
       document.getElementById('rMinValue').textContent = document.getElementById('rMin').value;
       document.getElementById('rMaxValue').textContent = document.getElementById('rMax').value;
-      document.getElementById('maxIterationsValue').textContent = document.getElementById('maxIterations').value;
+      document.getElementById('collusionBoostValue').textContent = document.getElementById('collusionBoost').value;
     }
     
     function resetToDefaults() {
-      document.getElementById('numUsers').value = 25;
-      document.getElementById('numContent').value = 40;
-      document.getElementById('ratingDensity').value = 40;
+      document.getElementById('ratingDensity').value = 60;
       document.getElementById('noiseLevel').value = 0.15;
       document.getElementById('damping').value = 0.3;
       document.getElementById('alpha').value = 2;
       document.getElementById('rMin').value = 0.05;
       document.getElementById('rMax').value = 2;
-      document.getElementById('maxIterations').value = 20;
+      document.getElementById('enableColluding').checked = true;
+      document.getElementById('collusionBoost').value = 0.3;
       updateDisplayedValues();
     }
-    
-    // Add event listeners for real-time value updates
-    document.querySelectorAll('input[type="range"]').forEach(input => {
-      input.addEventListener('input', updateDisplayedValues);
-    });
     
     // ==================== DATA GENERATION ====================
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
     }
     
-    function randomNormal(mean = 0, stddev = 1) {
-      // Box-Muller transform
-      let u1 = Math.random();
-      let u2 = Math.random();
-      let z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-      return mean + z0 * stddev;
-    }
-    
-    function generateUsers() {
-      users = [];
-      const types = [
-        { name: 'discerning', count: Math.floor(params.numUsers * 0.25), noise: 0.05 },
-        { name: 'average', count: Math.floor(params.numUsers * 0.30), noise: 0.15 },
-        { name: 'contrarian', count: Math.floor(params.numUsers * 0.15), noise: 0.15 },
-        { name: 'random', count: Math.floor(params.numUsers * 0.20), noise: 0.5 },
-        { name: 'colluding', count: Math.floor(params.numUsers * 0.10), noise: 0.05 }
-      ];
+    function generateData() {
+      rng = new SeededRandom(SEED);
       
-      // Adjust last type to match exact count
-      const totalAssigned = types.reduce((sum, t) => sum + t.count, 0);
-      types[types.length - 1].count += params.numUsers - totalAssigned;
+      users = USER_NAMES.map((name, idx) => ({
+        name: name,
+        type: USER_TYPE[name],
+        trustScore: 1.0,
+        ratings: []
+      }));
       
-      let userId = 0;
-      types.forEach(type => {
-        for (let i = 0; i < type.count; i++) {
-          users.push({
-            id: userId++,
-            type: type.name,
-            noise: type.noise * params.noiseLevel,
-            trustScore: 1.0,
-            initialTrustScore: 1.0
-          });
-        }
-      });
+      items = ITEM_TITLES.map((title, idx) => ({
+        title: title,
+        trueQuality: rng.next(),
+        ratings: []
+      }));
       
-      // Shuffle users
-      for (let i = users.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [users[i], users[j]] = [users[j], users[i]];
-      }
-      
-      // Reassign IDs after shuffle
-      users.forEach((user, idx) => user.id = idx);
-    }
-    
-    function generateContent() {
-      content = [];
-      for (let i = 0; i < params.numContent; i++) {
-        content.push({
-          id: i,
-          trueQuality: Math.random(), // Ground truth in [0, 1]
-          score: 0,
-          unweightedScore: 0,
-          numRatings: 0
-        });
-      }
-    }
-    
-    function generateRatings() {
       ratings = [];
-      const colludingTargets = new Set();
+      const colludingTargets = params.colludingEnabled ? [0, 1] : [];
       
-      // Select 10-20% of content as targets for colluders
-      const numTargets = Math.floor(params.numContent * 0.15);
-      while (colludingTargets.size < numTargets) {
-        colludingTargets.add(Math.floor(Math.random() * params.numContent));
-      }
-      
-      users.forEach(user => {
-        content.forEach(item => {
-          if (Math.random() < params.ratingDensity) {
+      users.forEach((user, userIdx) => {
+        items.forEach((item, itemIdx) => {
+          if (rng.next() < params.ratingDensity) {
             let rating;
             const trueQ = item.trueQuality;
+            const noise = params.noiseLevel;
             
             switch (user.type) {
               case 'discerning':
-                rating = clamp(trueQ + randomNormal(0, user.noise), 0, 1);
+                rating = clamp(trueQ + rng.normal(0, 0.05 * noise), 0, 1);
                 break;
               case 'average':
-                rating = clamp(trueQ + randomNormal(0, user.noise), 0, 1);
+                rating = clamp(trueQ + rng.normal(0, 0.15 * noise), 0, 1);
                 break;
               case 'contrarian':
-                rating = clamp((1 - trueQ) + randomNormal(0, user.noise), 0, 1);
+                rating = clamp((1 - trueQ) + rng.normal(0, 0.15 * noise), 0, 1);
                 break;
               case 'random':
-                rating = Math.random();
+                rating = rng.next();
                 break;
-              case 'colluding':
-                if (colludingTargets.has(item.id)) {
-                  // Inflate rating regardless of true quality
-                  rating = clamp(0.8 + randomNormal(0, user.noise), 0, 1);
+              case 'colluder':
+                if (colludingTargets.includes(itemIdx)) {
+                  rating = clamp(Math.min(1.0, trueQ + params.collusionBoost) + rng.normal(0, 0.05 * noise), 0, 1);
                 } else {
-                  // Rate normally otherwise
-                  rating = clamp(trueQ + randomNormal(0, user.noise * 2), 0, 1);
+                  rating = clamp(trueQ + rng.normal(0, 0.15 * noise * 2), 0, 1);
                 }
                 break;
               default:
-                rating = Math.random();
+                rating = rng.next();
             }
             
-            ratings.push({
-              userId: user.id,
-              contentId: item.id,
-              rating: rating
-            });
+            ratings.push({ userIdx, itemIdx, rating });
+            user.ratings.push({ itemIdx, rating });
+            item.ratings.push({ userIdx, rating });
           }
         });
       });
     }
     
     // ==================== ALGORITHM ====================
-    function computeContentScores() {
-      content.forEach(item => {
+    function computeItemScores(userTrustScores) {
+      return items.map(item => {
+        if (item.ratings.length === 0) return { score: 0.5, unweightedScore: 0.5 };
+        
         let weightedSum = 0;
         let weightSum = 0;
         let unweightedSum = 0;
-        let count = 0;
         
-        ratings.forEach(r => {
-          if (r.contentId === item.id) {
-            const user = users[r.userId];
-            weightedSum += user.trustScore * r.rating;
-            weightSum += user.trustScore;
-            unweightedSum += r.rating;
-            count++;
-          }
+        item.ratings.forEach(r => {
+          const trust = userTrustScores[r.userIdx];
+          weightedSum += trust * r.rating;
+          weightSum += trust;
+          unweightedSum += r.rating;
         });
         
-        item.score = count > 0 ? weightedSum / (weightSum + params.epsilon) : 0.5;
-        item.unweightedScore = count > 0 ? unweightedSum / count : 0.5;
-        item.numRatings = count;
+        return {
+          score: weightSum > 0 ? weightedSum / weightSum : 0.5,
+          unweightedScore: unweightedSum / item.ratings.length
+        };
       });
     }
     
-    function updateUserReliabilities() {
-      users.forEach(user => {
+    function computeUserTrustScores(itemScores, prevTrustScores) {
+      return users.map((user, userIdx) => {
+        if (user.ratings.length === 0) return prevTrustScores[userIdx];
+        
         let alignmentSum = 0;
-        let count = 0;
-        
-        ratings.forEach(r => {
-          if (r.userId === user.id) {
-            const item = content[r.contentId];
-            if (item.numRatings > 0) {
-              const error = Math.abs(r.rating - item.score);
-              const alignment = 1 - error;
-              alignmentSum += alignment;
-              count++;
-            }
-          }
+        user.ratings.forEach(r => {
+          const itemScore = itemScores[r.itemIdx].score;
+          const error = Math.abs(r.rating - itemScore);
+          const alignment = 1 - error;
+          alignmentSum += alignment;
         });
         
-        if (count > 0) {
-          const avgAlignment = alignmentSum / count;
-          // Map alignment to [rMin, rMax] with exponent
-          const newReliability = params.rMin + 
-            (params.rMax - params.rMin) * Math.pow(avgAlignment, params.alpha);
-          
-          // Apply damping
-          user.trustScore = (1 - params.damping) * user.trustScore + 
-                            params.damping * newReliability;
-        }
+        const avgAlignment = alignmentSum / user.ratings.length;
+        const newTrust = params.rMin + (params.rMax - params.rMin) * Math.pow(avgAlignment, params.alpha);
+        
+        return (1 - params.damping) * prevTrustScores[userIdx] + params.damping * newTrust;
       });
     }
     
-    function runAlgorithm() {
-      const history = {
-        deltaQ: [],
-        deltaR: [],
-        meanReliability: []
-      };
+    function computeAllRounds() {
+      roundStates = [];
       
-      // Initialize
-      users.forEach(user => user.trustScore = 1.0);
+      let trustScores = users.map(() => 1.0);
+      let itemScores = computeItemScores(trustScores);
       
-      for (let iter = 0; iter < params.maxIterations; iter++) {
-        // Store previous values
-        const prevScores = content.map(c => c.score);
-        const prevReliabilities = users.map(u => u.trustScore);
-        
-        // Update
-        computeContentScores();
-        updateUserReliabilities();
-        
-        // Compute deltas
-        let deltaQ = 0;
-        content.forEach((item, i) => {
-          deltaQ += Math.abs(item.score - prevScores[i]);
-        });
-        deltaQ /= content.length;
-        
-        let deltaR = 0;
-        users.forEach((user, i) => {
-          deltaR += Math.abs(user.trustScore - prevReliabilities[i]);
-        });
-        deltaR /= users.length;
-        
-        const meanR = users.reduce((sum, u) => sum + u.trustScore, 0) / users.length;
-        
-        history.deltaQ.push(deltaQ);
-        history.deltaR.push(deltaR);
-        history.meanReliability.push(meanR);
-        
-        // Check convergence
-        if (iter > 3 && deltaQ < 0.001 && deltaR < 0.001) {
-          break;
-        }
-      }
-      
-      return history;
-    }
-    
-    // ==================== VISUALIZATION ====================
-    function drawBarChart(canvas, data, options = {}) {
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-      const padding = 40;
-      const chartWidth = width - 2 * padding;
-      const chartHeight = height - 2 * padding;
-      
-      ctx.clearRect(0, 0, width, height);
-      
-      // Background
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, width, height);
-      
-      if (data.length === 0) return;
-      
-      const maxValue = options.maxValue || Math.max(...data.map(d => d.value));
-      const minValue = options.minValue || 0;
-      const range = maxValue - minValue;
-      
-      const barWidth = chartWidth / data.length - 2;
-      
-      // Draw bars
-      data.forEach((item, i) => {
-        const barHeight = ((item.value - minValue) / range) * chartHeight;
-        const x = padding + i * (chartWidth / data.length);
-        const y = height - padding - barHeight;
-        
-        ctx.fillStyle = item.color || '#3498db';
-        ctx.fillRect(x, y, barWidth, barHeight);
+      roundStates.push({
+        round: 0,
+        trustScores: [...trustScores],
+        itemScores: itemScores.map(s => ({ ...s })),
+        trustChanges: users.map(() => 0),
+        itemChanges: items.map(() => 0),
+        summary: "Starting point: Everyone has equal voice (trust score = 1.0)"
       });
       
-      // Draw axes
-      ctx.strokeStyle = '#333';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(padding, padding);
-      ctx.lineTo(padding, height - padding);
-      ctx.lineTo(width - padding, height - padding);
-      ctx.stroke();
-      
-      // Labels
-      ctx.fillStyle = '#333';
-      ctx.font = '12px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(options.xLabel || '', width / 2, height - 5);
-      
-      ctx.save();
-      ctx.translate(15, height / 2);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillText(options.yLabel || '', 0, 0);
-      ctx.restore();
-      
-      // Y-axis ticks
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      for (let i = 0; i <= 5; i++) {
-        const value = minValue + (range * i / 5);
-        const y = height - padding - (chartHeight * i / 5);
-        ctx.fillText(value.toFixed(2), padding - 5, y);
+      for (let round = 1; round <= MAX_ROUNDS; round++) {
+        const prevTrust = trustScores;
+        const prevItemScores = itemScores;
         
-        ctx.strokeStyle = '#ddd';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(padding, y);
-        ctx.lineTo(width - padding, y);
-        ctx.stroke();
+        trustScores = computeUserTrustScores(itemScores, prevTrust);
+        itemScores = computeItemScores(trustScores);
+        
+        const trustChanges = trustScores.map((t, i) => t - prevTrust[i]);
+        const itemChanges = itemScores.map((s, i) => s.score - prevItemScores[i].score);
+        
+        const summary = generateRoundSummary(round, trustChanges, itemChanges);
+        
+        roundStates.push({
+          round: round,
+          trustScores: [...trustScores],
+          itemScores: itemScores.map(s => ({ ...s })),
+          trustChanges: [...trustChanges],
+          itemChanges: [...itemChanges],
+          summary: summary
+        });
       }
     }
     
-    function drawScatterPlot(canvas, data, options = {}) {
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-      const padding = 50;
-      const chartWidth = width - 2 * padding;
-      const chartHeight = height - 2 * padding;
+    function generateRoundSummary(round, trustChanges, itemChanges) {
+      const gainers = [];
+      const losers = [];
       
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, width, height);
-      
-      if (data.length === 0) return;
-      
-      const xValues = data.map(d => d.x);
-      const yValues = data.map(d => d.y);
-      const minX = options.minX ?? Math.min(...xValues);
-      const maxX = options.maxX ?? Math.max(...xValues);
-      const minY = options.minY ?? Math.min(...yValues);
-      const maxY = options.maxY ?? Math.max(...yValues);
-      const rangeX = maxX - minX || 1;
-      const rangeY = maxY - minY || 1;
-      
-      // Draw grid
-      ctx.strokeStyle = '#e0e0e0';
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 5; i++) {
-        const x = padding + (chartWidth * i / 5);
-        const y = height - padding - (chartHeight * i / 5);
-        
-        ctx.beginPath();
-        ctx.moveTo(x, padding);
-        ctx.lineTo(x, height - padding);
-        ctx.stroke();
-        
-        ctx.beginPath();
-        ctx.moveTo(padding, y);
-        ctx.lineTo(width - padding, y);
-        ctx.stroke();
-      }
-      
-      // Draw axes
-      ctx.strokeStyle = '#333';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(padding, padding);
-      ctx.lineTo(padding, height - padding);
-      ctx.lineTo(width - padding, height - padding);
-      ctx.stroke();
-      
-      // Draw points
-      data.forEach(point => {
-        const x = padding + ((point.x - minX) / rangeX) * chartWidth;
-        const y = height - padding - ((point.y - minY) / rangeY) * chartHeight;
-        
-        ctx.fillStyle = point.color || '#3498db';
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, 2 * Math.PI);
-        ctx.fill();
+      trustChanges.forEach((change, idx) => {
+        if (change > 0.02) gainers.push(users[idx].name);
+        if (change < -0.02) losers.push(users[idx].name);
       });
       
-      // Labels
-      ctx.fillStyle = '#333';
-      ctx.font = '12px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(options.xLabel || '', width / 2, height - 10);
+      let summary = `Round ${round}: `;
       
-      ctx.save();
-      ctx.translate(15, height / 2);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillText(options.yLabel || '', 0, 0);
-      ctx.restore();
-      
-      // Axis ticks
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      for (let i = 0; i <= 5; i++) {
-        const value = minX + (rangeX * i / 5);
-        const x = padding + (chartWidth * i / 5);
-        ctx.fillText(value.toFixed(2), x, height - padding + 5);
+      if (gainers.length > 0) {
+        summary += `${gainers.slice(0, 2).join(' and ')} gained voice${gainers.length > 2 ? ' (and others)' : ''}`;
       }
       
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      for (let i = 0; i <= 5; i++) {
-        const value = minY + (rangeY * i / 5);
-        const y = height - padding - (chartHeight * i / 5);
-        ctx.fillText(value.toFixed(2), padding - 5, y);
+      if (losers.length > 0) {
+        if (gainers.length > 0) summary += '; ';
+        summary += `${losers.slice(0, 2).join(' and ')} lost influence${losers.length > 2 ? ' (and others)' : ''}`;
       }
+      
+      if (gainers.length === 0 && losers.length === 0) {
+        summary += "Small adjustments across the board";
+      }
+      
+      return summary + ".";
     }
     
-    function drawLineChart(canvas, datasets, options = {}) {
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-      const padding = 50;
-      const chartWidth = width - 2 * padding;
-      const chartHeight = height - 2 * padding;
+    // ==================== DISPLAY ====================
+    function displayRound(roundIdx) {
+      if (roundIdx < 0 || roundIdx >= roundStates.length) return;
       
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, width, height);
+      currentRound = roundIdx;
+      const state = roundStates[roundIdx];
       
-      if (datasets.length === 0 || datasets[0].data.length === 0) return;
+      document.getElementById('roundLabel').textContent = `Round ${state.round} of ${MAX_ROUNDS}`;
+      document.getElementById('roundSlider').value = state.round;
+      document.getElementById('roundSummary').textContent = state.summary;
       
-      const allValues = datasets.flatMap(ds => ds.data);
-      const maxValue = options.maxValue ?? Math.max(...allValues);
-      const minValue = options.minValue ?? Math.min(...allValues);
-      const range = maxValue - minValue || 1;
-      const numPoints = datasets[0].data.length;
+      const userTableBody = document.getElementById('userTableBody');
+      const sortedUsers = users.map((user, idx) => ({
+        ...user,
+        trustScore: state.trustScores[idx],
+        trustChange: state.trustChanges[idx]
+      })).sort((a, b) => b.trustScore - a.trustScore);
       
-      // Draw grid
-      ctx.strokeStyle = '#e0e0e0';
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 5; i++) {
-        const y = height - padding - (chartHeight * i / 5);
-        ctx.beginPath();
-        ctx.moveTo(padding, y);
-        ctx.lineTo(width - padding, y);
-        ctx.stroke();
-      }
-      
-      // Draw axes
-      ctx.strokeStyle = '#333';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(padding, padding);
-      ctx.lineTo(padding, height - padding);
-      ctx.lineTo(width - padding, height - padding);
-      ctx.stroke();
-      
-      // Draw lines
-      datasets.forEach(dataset => {
-        ctx.strokeStyle = dataset.color || '#3498db';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        
-        dataset.data.forEach((value, i) => {
-          const x = padding + (chartWidth * i / (numPoints - 1));
-          const y = height - padding - ((value - minValue) / range) * chartHeight;
-          
-          if (i === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        });
-        
-        ctx.stroke();
-        
-        // Draw points
-        dataset.data.forEach((value, i) => {
-          const x = padding + (chartWidth * i / (numPoints - 1));
-          const y = height - padding - ((value - minValue) / range) * chartHeight;
-          
-          ctx.fillStyle = dataset.color || '#3498db';
-          ctx.beginPath();
-          ctx.arc(x, y, 3, 0, 2 * Math.PI);
-          ctx.fill();
-        });
-      });
-      
-      // Labels
-      ctx.fillStyle = '#333';
-      ctx.font = '12px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(options.xLabel || '', width / 2, height - 10);
-      
-      ctx.save();
-      ctx.translate(15, height / 2);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillText(options.yLabel || '', 0, 0);
-      ctx.restore();
-      
-      // Y-axis ticks
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      for (let i = 0; i <= 5; i++) {
-        const value = minValue + (range * i / 5);
-        const y = height - padding - (chartHeight * i / 5);
-        ctx.fillText(value.toFixed(3), padding - 5, y);
-      }
-      
-      // Legend
-      const legendX = width - padding - 150;
-      const legendY = padding + 20;
-      datasets.forEach((dataset, i) => {
-        const y = legendY + i * 20;
-        
-        ctx.fillStyle = dataset.color;
-        ctx.fillRect(legendX, y - 5, 15, 10);
-        
-        ctx.fillStyle = '#333';
-        ctx.textAlign = 'left';
-        ctx.fillText(dataset.label, legendX + 20, y);
-      });
-    }
-    
-    // ==================== DISPLAY RESULTS ====================
-    function displayResults(history) {
-      document.getElementById('results').style.display = 'block';
-      
-      // Statistics
-      const stats = [
-        { label: 'Total Users', value: users.length },
-        { label: 'Total Content', value: content.length },
-        { label: 'Total Ratings', value: ratings.length },
-        { label: 'Iterations', value: history.deltaQ.length }
-      ];
-      
-      const statsHtml = stats.map(s => `
-        <div class="stat-card">
-          <div class="stat-label">${s.label}</div>
-          <div class="stat-value">${s.value}</div>
-        </div>
-      `).join('');
-      document.getElementById('statsContainer').innerHTML = statsHtml;
-      
-      // Top content tables
-      const sortedByWeighted = [...content].sort((a, b) => b.score - a.score);
-      const sortedByUnweighted = [...content].sort((a, b) => b.unweightedScore - a.unweightedScore);
-      
-      const makeTableRows = (items, useWeighted) => {
-        return items.slice(0, 15).map((item, idx) => {
-          const scoreVal = useWeighted ? item.score : item.unweightedScore;
-          const qualityDiff = Math.abs(scoreVal - item.trueQuality);
-          const accuracyClass = qualityDiff < 0.15 ? 'highlight' : (qualityDiff > 0.3 ? 'lowlight' : '');
-          
-          return `
-            <tr>
-              <td>${idx + 1}</td>
-              <td>Content ${item.id}</td>
-              <td>${item.trueQuality.toFixed(3)}</td>
-              <td class="${accuracyClass}">${scoreVal.toFixed(3)}</td>
-              <td>${qualityDiff.toFixed(3)}</td>
-              <td>${item.numRatings}</td>
-            </tr>
-          `;
-        }).join('');
-      };
-      
-      const tableHeader = `
-        <tr>
-          <th>Rank</th>
-          <th>ID</th>
-          <th>True Quality</th>
-          <th>Est. Score</th>
-          <th>Error</th>
-          <th># Ratings</th>
-        </tr>
-      `;
-      
-      document.getElementById('unweightedTable').innerHTML = tableHeader + makeTableRows(sortedByUnweighted, false);
-      document.getElementById('weightedTable').innerHTML = tableHeader + makeTableRows(sortedByWeighted, true);
-      
-      // User reliability table
-      const sortedUsers = [...users].sort((a, b) => b.trustScore - a.trustScore);
-      
-      const userRows = sortedUsers.map((user, idx) => {
-        const numRatings = ratings.filter(r => r.userId === user.id).length;
-        
-        // Calculate average error
-        let errorSum = 0;
-        let errorCount = 0;
-        ratings.forEach(r => {
-          if (r.userId === user.id) {
-            const item = content[r.contentId];
-            errorSum += Math.abs(r.rating - item.trueQuality);
-            errorCount++;
-          }
-        });
-        const avgError = errorCount > 0 ? errorSum / errorCount : 0;
-        
-        const reliabilityClass = user.trustScore > 1.2 ? 'highlight' : (user.trustScore < 0.3 ? 'lowlight' : '');
+      userTableBody.innerHTML = sortedUsers.map((user, rank) => {
+        const changeIcon = user.trustChange > 0.01 ? '↑' : (user.trustChange < -0.01 ? '↓' : '→');
+        const changeColor = user.trustChange > 0.01 ? '#27ae60' : (user.trustChange < -0.01 ? '#e74c3c' : '#95a5a6');
+        const note = getUserNote(user.type, user.trustScore);
         
         return `
           <tr>
-            <td>${idx + 1}</td>
-            <td>User ${user.id}</td>
-            <td>${user.type}</td>
-            <td class="${reliabilityClass}">${user.trustScore.toFixed(3)}</td>
-            <td>${avgError.toFixed(3)}</td>
-            <td>${numRatings}</td>
+            <td>${rank + 1}</td>
+            <td><strong>${user.name}</strong></td>
+            <td>${user.trustScore.toFixed(3)}</td>
+            <td style="color: ${changeColor}; font-weight: bold;">${changeIcon} ${Math.abs(user.trustChange).toFixed(3)}</td>
+            <td style="font-style: italic; color: #666;">${note}</td>
           </tr>
         `;
       }).join('');
       
-      document.getElementById('userTable').innerHTML = `
-        <tr>
-          <th>Rank</th>
-          <th>ID</th>
-          <th>Type</th>
-          <th>trust score</th>
-          <th>Avg Error</th>
-          <th># Ratings</th>
-        </tr>
-        ${userRows}
-      `;
-      
-      // Reliability distribution
-      const reliabilityBins = Array(20).fill(0);
-      users.forEach(user => {
-        const bin = Math.floor((user.trustScore - params.rMin) / (params.rMax - params.rMin) * 19);
-        const clampedBin = Math.max(0, Math.min(19, bin));
-        reliabilityBins[clampedBin]++;
-      });
-      
-      const reliabilityData = reliabilityBins.map((count, i) => ({
-        value: count,
-        color: '#3498db'
-      }));
-      
-      drawBarChart(
-        document.getElementById('reliabilityChart'),
-        reliabilityData,
-        {
-          xLabel: 'Reliability Bin',
-          yLabel: 'Count',
-          maxValue: Math.max(...reliabilityBins)
-        }
-      );
-      
-      // Error scatter plot
-      const scatterData = users.map(user => {
-        let errorSum = 0;
-        let errorCount = 0;
-        ratings.forEach(r => {
-          if (r.userId === user.id) {
-            const item = content[r.contentId];
-            errorSum += Math.abs(r.rating - item.trueQuality);
-            errorCount++;
-          }
-        });
-        const avgError = errorCount > 0 ? errorSum / errorCount : 0;
+      const itemTableBody = document.getElementById('itemTableBody');
+      itemTableBody.innerHTML = items.map((item, idx) => {
+        const score = state.itemScores[idx];
+        const change = state.itemChanges[idx];
+        const changeIcon = change > 0.01 ? '↑' : (change < -0.01 ? '↓' : '→');
+        const changeColor = change > 0.01 ? '#27ae60' : (change < -0.01 ? '#e74c3c' : '#95a5a6');
         
-        const colors = {
-          discerning: '#27ae60',
-          average: '#3498db',
-          contrarian: '#e74c3c',
-          random: '#95a5a6',
-          colluding: '#e67e22'
-        };
-        
-        return {
-          x: user.trustScore,
-          y: avgError,
-          color: colors[user.type] || '#3498db'
-        };
-      });
+        return `
+          <tr>
+            <td><strong>${item.title}</strong></td>
+            <td>${item.trueQuality.toFixed(3)}</td>
+            <td>${score.score.toFixed(3)}</td>
+            <td>${score.unweightedScore.toFixed(3)}</td>
+            <td style="color: ${changeColor}; font-weight: bold;">${changeIcon} ${Math.abs(change).toFixed(3)}</td>
+          </tr>
+        `;
+      }).join('');
       
-      drawScatterPlot(
-        document.getElementById('errorChart'),
-        scatterData,
-        {
-          xLabel: 'User Reliability',
-          yLabel: 'Average Rating Error',
-          minX: 0,
-          maxX: params.rMax,
-          minY: 0,
-          maxY: 1
-        }
-      );
+      const avgTrust = state.trustScores.reduce((a, b) => a + b, 0) / state.trustScores.length;
+      const maxTrust = Math.max(...state.trustScores);
+      const minTrust = Math.min(...state.trustScores);
       
-      // Convergence chart
-      const convergenceDatasets = [
-        {
-          label: 'Δ Content Score',
-          data: history.deltaQ,
-          color: '#3498db'
-        },
-        {
-          label: 'Δ User Reliability',
-          data: history.deltaR,
-          color: '#e74c3c'
-        }
-      ];
+      document.getElementById('avgTrustStat').textContent = avgTrust.toFixed(3);
+      document.getElementById('spreadStat').textContent = (maxTrust - minTrust).toFixed(3);
+    }
+    
+    function getUserNote(type, trustScore) {
+      if (trustScore > 1.5) return "Often on target";
+      if (trustScore > 1.2) return "Usually accurate";
+      if (trustScore > 0.9) return "Mixed results";
+      if (trustScore > 0.6) return "Usually off target";
+      return "Rarely matches";
+    }
+    
+    // ==================== CONTROLS ====================
+    function prevRound() {
+      if (currentRound > 0) {
+        displayRound(currentRound - 1);
+      }
+    }
+    
+    function nextRound() {
+      if (currentRound < MAX_ROUNDS) {
+        displayRound(currentRound + 1);
+      }
+    }
+    
+    function goToRound(round) {
+      displayRound(round);
+    }
+    
+    function resetRound() {
+      stopPlaying();
+      displayRound(0);
+    }
+    
+    function togglePlay() {
+      if (isPlaying) {
+        stopPlaying();
+      } else {
+        startPlaying();
+      }
+    }
+    
+    function startPlaying() {
+      isPlaying = true;
+      document.getElementById('playBtn').textContent = '⏸ Pause';
       
-      drawLineChart(
-        document.getElementById('convergenceChart'),
-        convergenceDatasets,
-        {
-          xLabel: 'Iteration',
-          yLabel: 'Change',
-          minValue: 0
+      playInterval = setInterval(() => {
+        if (currentRound < MAX_ROUNDS) {
+          nextRound();
+        } else {
+          stopPlaying();
         }
-      );
+      }, 1500);
+    }
+    
+    function stopPlaying() {
+      isPlaying = false;
+      document.getElementById('playBtn').textContent = '▶ Play';
+      if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+      }
+    }
+    
+    function reseed() {
+      stopPlaying();
+      SEED = Math.floor(Math.random() * 1000000);
+      runSimulation();
     }
     
     // ==================== MAIN SIMULATION ====================
     function runSimulation() {
+      stopPlaying();
       initializeParams();
-      
-      console.log('Generating data...');
-      generateUsers();
-      generateContent();
-      generateRatings();
-      
-      console.log('Running algorithm...');
-      const history = runAlgorithm();
-      
-      console.log('Displaying results...');
-      displayResults(history);
-      
-      console.log('Simulation complete!');
+      generateData();
+      computeAllRounds();
+      displayRound(0);
     }
     
-    // Initialize on load
-    updateDisplayedValues();
-    runSimulation();
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('input[type="range"], input[type="checkbox"]').forEach(input => {
+        input.addEventListener('input', updateDisplayedValues);
+      });
+      
+      document.getElementById('roundSlider').addEventListener('input', (e) => {
+        goToRound(parseInt(e.target.value));
+      });
+      
+      updateDisplayedValues();
+      runSimulation();
+    });
   </script>
 </body>
 </html>
