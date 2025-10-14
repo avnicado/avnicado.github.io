@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Ratings Demo: The Megaphone Effect</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      color: #333;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 2.5em;
+    }
+    
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 1.2em;
+      margin-bottom: 25px;
+      font-style: italic;
+    }
+    
+    h2 {
+      color: #34495e;
+      margin-top: 35px;
+      margin-bottom: 15px;
+      font-size: 1.8em;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    
+    h3 {
+      color: #555;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+    
+    .intro {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      font-size: 1.05em;
+    }
+    
+    .intro strong {
+      color: #fff;
+      font-size: 1.1em;
+    }
+    
+    .quick-start {
+      background: #e8f5e9;
+      border-left: 5px solid #4caf50;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 5px;
+    }
+    
+    .quick-start h3 {
+      color: #2e7d32;
+      margin-top: 0;
+      font-size: 1.4em;
+    }
+    
+    .quick-start ol {
+      margin: 15px 0 15px 25px;
+    }
+    
+    .quick-start li {
+      margin: 10px 0;
+      font-size: 1.05em;
+    }
+    
+    .warning {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 18px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+    
+    .round-control {
+      background: #e3f2fd;
+      border: 2px solid #2196f3;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 30px 0;
+    }
+    
+    .round-control h3 {
+      margin-top: 0;
+      color: #1976d2;
+    }
+    
+    .round-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    
+    .round-slider {
+      width: 100%;
+      margin: 15px 0;
+    }
+    
+    .round-label {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #1976d2;
+      text-align: center;
+      margin: 10px 0;
+    }
+    
+    .round-summary {
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      font-style: italic;
+      border-left: 4px solid #2196f3;
+    }
+    
+    .controls {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid #dee2e6;
+    }
+    
+    .control-group {
+      margin: 18px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .control-group label {
+      min-width: 250px;
+      font-weight: 600;
+      font-size: 1.05em;
+    }
+    
+    .control-group input[type="range"] {
+      flex: 1;
+      max-width: 300px;
+      height: 6px;
+    }
+    
+    .control-group .value {
+      min-width: 70px;
+      text-align: right;
+      font-family: monospace;
+      font-size: 1.05em;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    
+    .control-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #2980b9;
+    }
+    
+    button:active {
+      transform: translateY(1px);
+    }
+    
+    button.secondary {
+      background: #95a5a6;
+    }
+    
+    button.secondary:hover {
+      background: #7f8c8d;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .stat-card {
+      background: #3498db;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95em;
+    }
+    
+    th {
+      background: #34495e;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+    
+    tr:hover {
+      background: #e9ecef;
+    }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+      margin-left: 5px;
+      width: 16px;
+      height: 16px;
+      background: #3498db;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 16px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 250px;
+      background-color: #555;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -125px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.9em;
+      line-height: 1.4;
+      font-weight: normal;
+    }
+    
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+    
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 30px;
+      margin: 30px 0;
+    }
+    
+    .chart-container {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #dee2e6;
+    }
+    
+    .chart-container h4 {
+      margin: 0 0 15px 0;
+      color: #2c3e50;
+      font-size: 1.1em;
+    }
+    
+    .chart-caption {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #666;
+      font-style: italic;
+    }
+    
+    canvas {
+      display: block;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span style="font-size: 1.5em; margin-right: 10px;">📢</span> Smart Ratings Demo</h1>
+    <div class="subtitle">The Megaphone Effect: Better Pickers Get a Bigger Voice</div>
+    
+    <div class="intro">
+      <p><strong>What This Is:</strong> A quick demo showing how ratings from consistently good pickers count more. Think of it like movie critics—if someone keeps recommending movies you end up loving, you trust their opinion more next time. This system does that automatically.</p>
+      
+      <p style="margin-top: 15px;"><strong>The Big Idea:</strong> People who pick good stuff get a bigger megaphone. People who often miss get a smaller one.</p>
+    </div>
+    
+    <div class="quick-start">
+      <h3>🚀 60-Second Tour</h3>
+      <p><strong>How it works in 3 steps:</strong></p>
+      <ol>
+        <li><strong>Start:</strong> Everyone's voice is the same size (Round 0)</li>
+        <li><strong>Combine:</strong> We mix everyone's ratings to get a quality score for each item</li>
+        <li><strong>Adjust:</strong> People who often agree with the final quality get a bigger voice next round. Others get a smaller one</li>
+      </ol>
+      <p style="margin-top: 15px;"><strong>What to look for:</strong> Step through the rounds below and see how sharp pickers gain influence while random or opposite raters fade.</p>
+    </div>
+    
+    <div class="warning">
+      <strong>⚠️ Important Note:</strong> This is a teaching tool, not a real system. We're using exactly 10 named people and 4 items to make it easy to follow. The scores show who's consistent within this small simulation, not absolute truth or taste.
+    </div>
+
+    <h2>Round-by-Round Stepper</h2>
+    
+    <div class="round-control">
+      <h3>Navigate Through the Rounds</h3>
+      <div class="round-label" id="roundLabel">Round 0 of 8</div>
+      
+      <div class="round-buttons">
+        <button onclick="resetRound()">⏮ Reset to Start</button>
+        <button onclick="prevRound()">⏪ Previous</button>
+        <button id="playBtn" onclick="togglePlay()">▶ Play</button>
+        <button onclick="nextRound()">Next ⏩</button>
+      </div>
+      
+      <input type="range" class="round-slider" id="roundSlider" min="0" max="8" value="0" step="1">
+      
+      <div class="round-summary" id="roundSummary">
+        Starting point: Everyone has equal voice (trust score = 1.0)
+      </div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Average Trust</div>
+        <div class="stat-value" id="avgTrustStat">1.000</div>
+      </div>
+      <div class="stat-card" style="background: #e74c3c;">
+        <div class="stat-label">Trust Score Spread</div>
+        <div class="stat-value" id="spreadStat">0.000</div>
+      </div>
+    </div>
+
+    <div id="results">
+      <h3>People and Their Trust Scores</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Trust Score</th>
+            <th>Change</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+        </tbody>
+      </table>
+      
+      <h3>Items and Their Quality Scores</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>True Quality</th>
+            <th>Weighted Score</th>
+            <th>Unweighted Avg</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody id="itemTableBody">
+        </tbody>
+      </table>
+      
+      <h3 style="margin-top: 40px;">Progress Visualization</h3>
+      <p style="margin-bottom: 20px; color: #666;">Charts show data up to the current round (Round <span id="currentRoundDisplay">0</span>)</p>
+      
+      <div class="charts-grid">
+        <div class="chart-container">
+          <h4>Trust Score Distribution</h4>
+          <canvas id="trustChart" width="500" height="300"></canvas>
+          <div class="chart-caption">Shows how trust scores are spread across all people at this round</div>
+        </div>
+        
+        <div class="chart-container">
+          <h4>Trust vs Rating Accuracy</h4>
+          <canvas id="accuracyChart" width="500" height="300"></canvas>
+          <div class="chart-caption">Shows relationship between trust score and rating accuracy (how close ratings are to true quality)</div>
+        </div>
+      </div>
+      
+      <div class="chart-container">
+        <h4>Trust Score Evolution Over Rounds</h4>
+        <canvas id="convergenceChart" width="1000" height="300"></canvas>
+        <div class="chart-caption">Shows how each person's trust score changes from Round 0 to the current round</div>
+      </div>
+    </div>
+
+    <h2>Settings</h2>
+    <div class="controls">
+      <p style="margin-bottom: 20px;"><strong>Note:</strong> This demo uses exactly 10 people and 4 items. You can adjust how the algorithm learns below.</p>
+      
+      <h3>How the System Learns</h3>
+      <div class="control-group">
+        <label for="ratingDensity">How many ratings exist (%)
+          <span class="tooltip">?
+            <span class="tooltiptext">Percentage of all possible ratings that actually exist. Higher means more data</span>
+          </span>
+        </label>
+        <input type="range" id="ratingDensity" min="30" max="90" value="60" step="5">
+        <span class="value" id="ratingDensityValue">60%</span>
+      </div>
+      <div class="control-group">
+        <label for="noiseLevel">Noise in ratings
+          <span class="tooltip">?
+            <span class="tooltiptext">How much randomness in people's ratings. Higher = more unpredictable</span>
+          </span>
+        </label>
+        <input type="range" id="noiseLevel" min="0.05" max="0.3" value="0.15" step="0.01">
+        <span class="value" id="noiseLevelValue">0.15</span>
+      </div>
+      <div class="control-group">
+        <label for="damping">Trust update speed
+          <span class="tooltip">?
+            <span class="tooltiptext">How fast trust changes each round. Lower = slower and more stable</span>
+          </span>
+        </label>
+        <input type="range" id="damping" min="0.1" max="0.9" value="0.3" step="0.05">
+        <span class="value" id="dampingValue">30%</span>
+      </div>
+      <div class="control-group">
+        <label for="alpha">Strictness
+          <span class="tooltip">?
+            <span class="tooltiptext">How picky we are when giving or taking trust. Higher = bigger rewards/penalties</span>
+          </span>
+        </label>
+        <input type="range" id="alpha" min="1" max="4" value="2" step="0.5">
+        <span class="value" id="alphaValue">2</span>
+      </div>
+      <div class="control-group">
+        <label for="rMin">Min influence per rater
+          <span class="tooltip">?
+            <span class="tooltiptext">Lower bound on any one person's voice</span>
+          </span>
+        </label>
+        <input type="range" id="rMin" min="0.01" max="0.2" value="0.05" step="0.01">
+        <span class="value" id="rMinValue">0.05</span>
+      </div>
+      <div class="control-group">
+        <label for="rMax">Max influence per rater
+          <span class="tooltip">?
+            <span class="tooltiptext">Upper bound on any one person's voice</span>
+          </span>
+        </label>
+        <input type="range" id="rMax" min="1.5" max="3" value="2" step="0.1">
+        <span class="value" id="rMaxValue">2.0</span>
+      </div>
+      
+      <h3>Collusion Test</h3>
+      <div class="control-group">
+        <label for="enableColluding">
+          <input type="checkbox" id="enableColluding" checked>
+          Enable colluding group
+          <span class="tooltip">?
+            <span class="tooltiptext">When checked, Booster Bea and Ben will try to boost certain items</span>
+          </span>
+        </label>
+      </div>
+      <div class="control-group">
+        <label for="collusionBoost">Collusion boost
+          <span class="tooltip">?
+            <span class="tooltiptext">How strongly the colluders overrate their target items</span>
+          </span>
+        </label>
+        <input type="range" id="collusionBoost" min="0.1" max="0.5" value="0.3" step="0.05">
+        <span class="value" id="collusionBoostValue">0.30</span>
+      </div>
+      
+      <div style="margin-top: 25px;">
+        <button onclick="runSimulation()">🔄 Re-run with Current Settings</button>
+        <button class="secondary" onclick="reseed()">🎲 Reseed (New Random Data)</button>
+        <button class="secondary" onclick="resetToDefaults()">↺ Reset to Defaults</button>
+      </div>
+    </div>
+
+    <h2>Meet the People</h2>
+    <p><strong>This demo uses exactly 10 named people:</strong></p>
+    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+      <li><strong style="color: #27ae60;">Sharpshooter Sam & Careful Casey</strong> (discerning) – Consistently on target</li>
+      <li><strong style="color: #3498db;">Steady Jordan, Average Alex & Helper Harper</strong> (average) – Usually close</li>
+      <li><strong style="color: #e74c3c;">Opposite Olive & Contrary Nico</strong> (contrarian) – Like the misses</li>
+      <li><strong style="color: #95a5a6;">Random Riley</strong> (random) – Coin-flip ratings</li>
+      <li><strong style="color: #e67e22;">Booster Bea & Booster Ben</strong> (colluders) – Try to boost certain items</li>
+    </ul>
+    
+    <h2>The 4 Items Being Rated</h2>
+    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+      <li><strong>Aurora Photo</strong></li>
+      <li><strong>Retro Keyboard Review</strong></li>
+      <li><strong>Indie Song</strong></li>
+      <li><strong>Short Documentary</strong></li>
+    </ul>
+    
+    <h2>How to Use This Demo</h2>
+    <ol style="margin: 20px 0 20px 30px; line-height: 2;">
+      <li>Use the <strong>Round Stepper</strong> above to navigate through Round 0 to Round 8</li>
+      <li>Watch how trust scores change as the system learns who's accurate</li>
+      <li>Click <strong>Play</strong> to automatically step through all rounds</li>
+      <li>Adjust settings and click <strong>Re-run</strong> to see how different parameters affect results</li>
+      <li>Click <strong>Reseed</strong> to generate completely new random ratings (same people and items)</li>
+    </ol>
+    
+    <div style="margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 5px; text-align: center;">
+      <p><strong>Remember:</strong> This is a demonstration with a tiny dataset (10 people, 4 items) to explain an idea. Real systems need thousands of users and items, plus extensive safeguards against manipulation.</p>
+    </div>
+  </div>
+  
+  <script>
+    // ==================== FIXED CONFIGURATION ====================
+    let SEED = 12345;
+    const MAX_ROUNDS = 8;
+    
+    const USER_NAMES = [
+      "Sharpshooter Sam",
+      "Careful Casey",
+      "Steady Jordan",
+      "Average Alex",
+      "Helper Harper",
+      "Opposite Olive",
+      "Contrary Nico",
+      "Random Riley",
+      "Booster Bea",
+      "Booster Ben"
+    ];
+    
+    const ITEM_TITLES = [
+      "Aurora Photo",
+      "Retro Keyboard Review",
+      "Indie Song",
+      "Short Documentary"
+    ];
+    
+    // True quality values for items (0-1 scale, configurable)
+    // These represent the "ground truth" quality of each item
+    const ITEM_TRUE_QUALITY = {
+      "Aurora Photo": 0.75,
+      "Retro Keyboard Review": 0.85,
+      "Indie Song": 0.60,
+      "Short Documentary": 0.40
+    };
+    
+    const USER_TYPE = {
+      "Sharpshooter Sam": "discerning",
+      "Careful Casey": "discerning",
+      "Steady Jordan": "average",
+      "Average Alex": "average",
+      "Helper Harper": "average",
+      "Opposite Olive": "contrarian",
+      "Contrary Nico": "contrarian",
+      "Random Riley": "random",
+      "Booster Bea": "colluder",
+      "Booster Ben": "colluder"
+    };
+    
+    // ==================== SEEDED RANDOM ====================
+    class SeededRandom {
+      constructor(seed) {
+        this.seed = seed;
+      }
+      
+      next() {
+        this.seed = (this.seed * 9301 + 49297) % 233280;
+        return this.seed / 233280;
+      }
+      
+      normal(mean = 0, stddev = 1) {
+        const u1 = this.next();
+        const u2 = this.next();
+        const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        return mean + z0 * stddev;
+      }
+    }
+    
+    let rng = new SeededRandom(SEED);
+    
+    // ==================== DATA STRUCTURES ====================
+    let users = [];
+    let items = [];
+    let ratings = [];
+    let roundStates = [];
+    let currentRound = 0;
+    let isPlaying = false;
+    let playInterval = null;
+    let params = {};
+    
+    // ==================== PARAMETERS ====================
+    function initializeParams() {
+      params = {
+        ratingDensity: parseFloat(document.getElementById('ratingDensity').value) / 100,
+        noiseLevel: parseFloat(document.getElementById('noiseLevel').value),
+        damping: parseFloat(document.getElementById('damping').value),
+        alpha: parseFloat(document.getElementById('alpha').value),
+        rMin: parseFloat(document.getElementById('rMin').value),
+        rMax: parseFloat(document.getElementById('rMax').value),
+        colludingEnabled: document.getElementById('enableColluding').checked,
+        collusionBoost: parseFloat(document.getElementById('collusionBoost').value),
+        epsilon: 1e-6
+      };
+    }
+    
+    function updateDisplayedValues() {
+      document.getElementById('ratingDensityValue').textContent = document.getElementById('ratingDensity').value + '%';
+      document.getElementById('noiseLevelValue').textContent = document.getElementById('noiseLevel').value;
+      const dampingPercent = Math.round(parseFloat(document.getElementById('damping').value) * 100);
+      document.getElementById('dampingValue').textContent = dampingPercent + '%';
+      document.getElementById('alphaValue').textContent = document.getElementById('alpha').value;
+      document.getElementById('rMinValue').textContent = document.getElementById('rMin').value;
+      document.getElementById('rMaxValue').textContent = document.getElementById('rMax').value;
+      document.getElementById('collusionBoostValue').textContent = document.getElementById('collusionBoost').value;
+    }
+    
+    function resetToDefaults() {
+      document.getElementById('ratingDensity').value = 60;
+      document.getElementById('noiseLevel').value = 0.15;
+      document.getElementById('damping').value = 0.3;
+      document.getElementById('alpha').value = 2;
+      document.getElementById('rMin').value = 0.05;
+      document.getElementById('rMax').value = 2;
+      document.getElementById('enableColluding').checked = true;
+      document.getElementById('collusionBoost').value = 0.3;
+      updateDisplayedValues();
+    }
+    
+    // ==================== DATA GENERATION ====================
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+    
+    function generateData() {
+      rng = new SeededRandom(SEED);
+      
+      users = USER_NAMES.map((name, idx) => ({
+        name: name,
+        type: USER_TYPE[name],
+        trustScore: 1.0,
+        ratings: []
+      }));
+      
+      items = ITEM_TITLES.map((title, idx) => ({
+        title: title,
+        trueQuality: ITEM_TRUE_QUALITY[title],
+        ratings: []
+      }));
+      
+      ratings = [];
+      const colludingTargets = params.colludingEnabled ? [0, 1] : [];
+      
+      users.forEach((user, userIdx) => {
+        items.forEach((item, itemIdx) => {
+          if (rng.next() < params.ratingDensity) {
+            let rating;
+            const trueQ = item.trueQuality;
+            const noise = params.noiseLevel;
+            
+            switch (user.type) {
+              case 'discerning':
+                rating = clamp(trueQ + rng.normal(0, 0.05 * noise), 0, 1);
+                break;
+              case 'average':
+                rating = clamp(trueQ + rng.normal(0, 0.15 * noise), 0, 1);
+                break;
+              case 'contrarian':
+                rating = clamp((1 - trueQ) + rng.normal(0, 0.15 * noise), 0, 1);
+                break;
+              case 'random':
+                rating = rng.next();
+                break;
+              case 'colluder':
+                if (colludingTargets.includes(itemIdx)) {
+                  rating = clamp(Math.min(1.0, trueQ + params.collusionBoost) + rng.normal(0, 0.05 * noise), 0, 1);
+                } else {
+                  rating = clamp(trueQ + rng.normal(0, 0.15 * noise * 2), 0, 1);
+                }
+                break;
+              default:
+                rating = rng.next();
+            }
+            
+            ratings.push({ userIdx, itemIdx, rating });
+            user.ratings.push({ itemIdx, rating });
+            item.ratings.push({ userIdx, rating });
+          }
+        });
+      });
+    }
+    
+    // ==================== ALGORITHM ====================
+    function computeItemScores(userTrustScores) {
+      return items.map(item => {
+        if (item.ratings.length === 0) return { score: 0.5, unweightedScore: 0.5 };
+        
+        let weightedSum = 0;
+        let weightSum = 0;
+        let unweightedSum = 0;
+        
+        item.ratings.forEach(r => {
+          const trust = userTrustScores[r.userIdx];
+          weightedSum += trust * r.rating;
+          weightSum += trust;
+          unweightedSum += r.rating;
+        });
+        
+        return {
+          score: weightSum > 0 ? weightedSum / weightSum : 0.5,
+          unweightedScore: unweightedSum / item.ratings.length
+        };
+      });
+    }
+    
+    function computeUserTrustScores(itemScores, prevTrustScores) {
+      return users.map((user, userIdx) => {
+        if (user.ratings.length === 0) return prevTrustScores[userIdx];
+        
+        let alignmentSum = 0;
+        user.ratings.forEach(r => {
+          const itemScore = itemScores[r.itemIdx].score;
+          const error = Math.abs(r.rating - itemScore);
+          const alignment = 1 - error;
+          alignmentSum += alignment;
+        });
+        
+        const avgAlignment = alignmentSum / user.ratings.length;
+        const newTrust = params.rMin + (params.rMax - params.rMin) * Math.pow(avgAlignment, params.alpha);
+        
+        return (1 - params.damping) * prevTrustScores[userIdx] + params.damping * newTrust;
+      });
+    }
+    
+    function computeAllRounds() {
+      roundStates = [];
+      
+      let trustScores = users.map(() => 1.0);
+      let itemScores = computeItemScores(trustScores);
+      
+      roundStates.push({
+        round: 0,
+        trustScores: [...trustScores],
+        itemScores: itemScores.map(s => ({ ...s })),
+        trustChanges: users.map(() => 0),
+        itemChanges: items.map(() => 0),
+        summary: "Starting point: Everyone has equal voice (trust score = 1.0)"
+      });
+      
+      for (let round = 1; round <= MAX_ROUNDS; round++) {
+        const prevTrust = trustScores;
+        const prevItemScores = itemScores;
+        
+        trustScores = computeUserTrustScores(itemScores, prevTrust);
+        itemScores = computeItemScores(trustScores);
+        
+        const trustChanges = trustScores.map((t, i) => t - prevTrust[i]);
+        const itemChanges = itemScores.map((s, i) => s.score - prevItemScores[i].score);
+        
+        const summary = generateRoundSummary(round, trustChanges, itemChanges);
+        
+        roundStates.push({
+          round: round,
+          trustScores: [...trustScores],
+          itemScores: itemScores.map(s => ({ ...s })),
+          trustChanges: [...trustChanges],
+          itemChanges: [...itemChanges],
+          summary: summary
+        });
+      }
+    }
+    
+    function generateRoundSummary(round, trustChanges, itemChanges) {
+      const gainers = [];
+      const losers = [];
+      
+      trustChanges.forEach((change, idx) => {
+        if (change > 0.02) gainers.push(users[idx].name);
+        if (change < -0.02) losers.push(users[idx].name);
+      });
+      
+      let summary = `Round ${round}: `;
+      
+      if (gainers.length > 0) {
+        summary += `${gainers.slice(0, 2).join(' and ')} gained voice${gainers.length > 2 ? ' (and others)' : ''}`;
+      }
+      
+      if (losers.length > 0) {
+        if (gainers.length > 0) summary += '; ';
+        summary += `${losers.slice(0, 2).join(' and ')} lost influence${losers.length > 2 ? ' (and others)' : ''}`;
+      }
+      
+      if (gainers.length === 0 && losers.length === 0) {
+        summary += "Small adjustments across the board";
+      }
+      
+      return summary + ".";
+    }
+    
+    // ==================== CHART DRAWING ====================
+    function drawBarChart(canvas, data, options = {}) {
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const padding = 40;
+      const chartWidth = width - 2 * padding;
+      const chartHeight = height - 2 * padding;
+      
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, width, height);
+      
+      if (data.length === 0) return;
+      
+      const maxValue = options.maxValue || Math.max(...data.map(d => d.value));
+      const minValue = options.minValue || 0;
+      const range = maxValue - minValue || 1;
+      const barWidth = chartWidth / data.length - 2;
+      
+      // Draw bars
+      data.forEach((item, i) => {
+        const barHeight = ((item.value - minValue) / range) * chartHeight;
+        const x = padding + i * (chartWidth / data.length);
+        const y = height - padding - barHeight;
+        
+        ctx.fillStyle = item.color || '#3498db';
+        ctx.fillRect(x, y, barWidth, barHeight);
+        
+        // Label
+        ctx.fillStyle = '#333';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.save();
+        ctx.translate(x + barWidth/2, height - padding + 5);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillText(item.label || '', 0, 0);
+        ctx.restore();
+      });
+      
+      // Draw axes
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(padding, padding);
+      ctx.lineTo(padding, height - padding);
+      ctx.lineTo(width - padding, height - padding);
+      ctx.stroke();
+      
+      // Y-axis ticks
+      ctx.fillStyle = '#333';
+      ctx.font = '11px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i <= 5; i++) {
+        const value = minValue + (range * i / 5);
+        const y = height - padding - (chartHeight * i / 5);
+        ctx.fillText(value.toFixed(2), padding - 5, y);
+        
+        ctx.strokeStyle = '#e0e0e0';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+    }
+    
+    function drawScatterPlot(canvas, data, options = {}) {
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const padding = 50;
+      const chartWidth = width - 2 * padding;
+      const chartHeight = height - 2 * padding;
+      
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, width, height);
+      
+      if (data.length === 0) return;
+      
+      const xValues = data.map(d => d.x);
+      const yValues = data.map(d => d.y);
+      const minX = options.minX ?? Math.min(...xValues);
+      const maxX = options.maxX ?? Math.max(...xValues);
+      const minY = options.minY ?? Math.min(...yValues);
+      const maxY = options.maxY ?? Math.max(...yValues);
+      const rangeX = maxX - minX || 1;
+      const rangeY = maxY - minY || 1;
+      
+      // Draw grid
+      ctx.strokeStyle = '#e0e0e0';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const x = padding + (chartWidth * i / 5);
+        const y = height - padding - (chartHeight * i / 5);
+        
+        ctx.beginPath();
+        ctx.moveTo(x, padding);
+        ctx.lineTo(x, height - padding);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+      
+      // Draw axes
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(padding, padding);
+      ctx.lineTo(padding, height - padding);
+      ctx.lineTo(width - padding, height - padding);
+      ctx.stroke();
+      
+      // Draw points
+      data.forEach(point => {
+        const x = padding + ((point.x - minX) / rangeX) * chartWidth;
+        const y = height - padding - ((point.y - minY) / rangeY) * chartHeight;
+        
+        ctx.fillStyle = point.color || '#3498db';
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+      
+      // Labels
+      ctx.fillStyle = '#333';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(options.xLabel || '', width / 2, height - 10);
+      
+      ctx.save();
+      ctx.translate(15, height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText(options.yLabel || '', 0, 0);
+      ctx.restore();
+      
+      // Axis ticks
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      for (let i = 0; i <= 5; i++) {
+        const value = minX + (rangeX * i / 5);
+        const x = padding + (chartWidth * i / 5);
+        ctx.fillText(value.toFixed(2), x, height - padding + 5);
+      }
+      
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i <= 5; i++) {
+        const value = minY + (rangeY * i / 5);
+        const y = height - padding - (chartHeight * i / 5);
+        ctx.fillText(value.toFixed(2), padding - 5, y);
+      }
+    }
+    
+    function drawLineChart(canvas, datasets, options = {}) {
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const padding = 50;
+      const chartWidth = width - 2 * padding;
+      const chartHeight = height - 2 * padding;
+      
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, width, height);
+      
+      if (datasets.length === 0 || datasets[0].data.length === 0) return;
+      
+      const allValues = datasets.flatMap(ds => ds.data);
+      const maxValue = options.maxValue ?? Math.max(...allValues);
+      const minValue = options.minValue ?? Math.min(...allValues);
+      const range = maxValue - minValue || 1;
+      const numPoints = datasets[0].data.length;
+      
+      // Draw grid
+      ctx.strokeStyle = '#e0e0e0';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const y = height - padding - (chartHeight * i / 5);
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+      
+      // Draw axes
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(padding, padding);
+      ctx.lineTo(padding, height - padding);
+      ctx.lineTo(width - padding, height - padding);
+      ctx.stroke();
+      
+      // Draw lines
+      datasets.forEach(dataset => {
+        ctx.strokeStyle = dataset.color || '#3498db';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        
+        dataset.data.forEach((value, i) => {
+          const x = padding + (chartWidth * i / (numPoints - 1));
+          const y = height - padding - ((value - minValue) / range) * chartHeight;
+          
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        
+        ctx.stroke();
+        
+        // Draw points
+        dataset.data.forEach((value, i) => {
+          const x = padding + (chartWidth * i / (numPoints - 1));
+          const y = height - padding - ((value - minValue) / range) * chartHeight;
+          
+          ctx.fillStyle = dataset.color || '#3498db';
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+        });
+      });
+      
+      // Labels
+      ctx.fillStyle = '#333';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(options.xLabel || '', width / 2, height - 10);
+      
+      ctx.save();
+      ctx.translate(15, height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText(options.yLabel || '', 0, 0);
+      ctx.restore();
+      
+      // X-axis ticks
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      for (let i = 0; i < numPoints; i++) {
+        const x = padding + (chartWidth * i / (numPoints - 1));
+        ctx.fillText(`${i}`, x, height - padding + 5);
+      }
+      
+      // Y-axis ticks
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i <= 5; i++) {
+        const value = minValue + (range * i / 5);
+        const y = height - padding - (chartHeight * i / 5);
+        ctx.fillText(value.toFixed(2), padding - 5, y);
+      }
+    }
+    
+    // ==================== DISPLAY ====================
+    function displayRound(roundIdx) {
+      if (roundIdx < 0 || roundIdx >= roundStates.length) return;
+      
+      currentRound = roundIdx;
+      const state = roundStates[roundIdx];
+      
+      document.getElementById('roundLabel').textContent = `Round ${state.round} of ${MAX_ROUNDS}`;
+      document.getElementById('roundSlider').value = state.round;
+      document.getElementById('roundSummary').textContent = state.summary;
+      
+      const userTableBody = document.getElementById('userTableBody');
+      const sortedUsers = users.map((user, idx) => ({
+        ...user,
+        trustScore: state.trustScores[idx],
+        trustChange: state.trustChanges[idx]
+      })).sort((a, b) => b.trustScore - a.trustScore);
+      
+      userTableBody.innerHTML = sortedUsers.map((user, rank) => {
+        const changeIcon = user.trustChange > 0.01 ? '↑' : (user.trustChange < -0.01 ? '↓' : '→');
+        const changeColor = user.trustChange > 0.01 ? '#27ae60' : (user.trustChange < -0.01 ? '#e74c3c' : '#95a5a6');
+        const note = getUserNote(user.type, user.trustScore);
+        
+        return `
+          <tr>
+            <td>${rank + 1}</td>
+            <td><strong>${user.name}</strong></td>
+            <td>${user.trustScore.toFixed(3)}</td>
+            <td style="color: ${changeColor}; font-weight: bold;">${changeIcon} ${Math.abs(user.trustChange).toFixed(3)}</td>
+            <td style="font-style: italic; color: #666;">${note}</td>
+          </tr>
+        `;
+      }).join('');
+      
+      const itemTableBody = document.getElementById('itemTableBody');
+      itemTableBody.innerHTML = items.map((item, idx) => {
+        const score = state.itemScores[idx];
+        const change = state.itemChanges[idx];
+        const changeIcon = change > 0.01 ? '↑' : (change < -0.01 ? '↓' : '→');
+        const changeColor = change > 0.01 ? '#27ae60' : (change < -0.01 ? '#e74c3c' : '#95a5a6');
+        
+        return `
+          <tr>
+            <td><strong>${item.title}</strong></td>
+            <td>${item.trueQuality.toFixed(3)}</td>
+            <td>${score.score.toFixed(3)}</td>
+            <td>${score.unweightedScore.toFixed(3)}</td>
+            <td style="color: ${changeColor}; font-weight: bold;">${changeIcon} ${Math.abs(change).toFixed(3)}</td>
+          </tr>
+        `;
+      }).join('');
+      
+      const avgTrust = state.trustScores.reduce((a, b) => a + b, 0) / state.trustScores.length;
+      const maxTrust = Math.max(...state.trustScores);
+      const minTrust = Math.min(...state.trustScores);
+      
+      document.getElementById('avgTrustStat').textContent = avgTrust.toFixed(3);
+      document.getElementById('spreadStat').textContent = (maxTrust - minTrust).toFixed(3);
+      
+      // Update current round display
+      document.getElementById('currentRoundDisplay').textContent = state.round;
+      
+      // Draw charts with progressive data (up to current round)
+      drawCharts(roundIdx);
+    }
+    
+    function drawCharts(upToRound) {
+      const state = roundStates[upToRound];
+      
+      // Chart 1: Trust Score Distribution (bar chart)
+      const trustData = users.map((user, idx) => ({
+        label: user.name.split(' ')[1] || user.name, // Just first name for space
+        value: state.trustScores[idx],
+        color: getColorForUserType(user.type)
+      })).sort((a, b) => b.value - a.value);
+      
+      drawBarChart(document.getElementById('trustChart'), trustData, {
+        minValue: 0,
+        maxValue: 2.5
+      });
+      
+      // Chart 2: Trust vs Accuracy (scatter plot)
+      const accuracyData = users.map((user, idx) => {
+        // Calculate average error for this user
+        let totalError = 0;
+        let count = 0;
+        user.ratings.forEach(r => {
+          const item = items[r.itemIdx];
+          const error = Math.abs(r.rating - item.trueQuality);
+          totalError += error;
+          count++;
+        });
+        const avgError = count > 0 ? totalError / count : 0.5;
+        
+        return {
+          x: avgError,
+          y: state.trustScores[idx],
+          color: getColorForUserType(user.type)
+        };
+      });
+      
+      drawScatterPlot(document.getElementById('accuracyChart'), accuracyData, {
+        xLabel: 'Average Rating Error',
+        yLabel: 'Trust Score',
+        minX: 0,
+        maxX: 0.6,
+        minY: 0,
+        maxY: 2.5
+      });
+      
+      // Chart 3: Convergence (line chart showing evolution up to current round)
+      const datasets = users.map((user, userIdx) => {
+        const data = [];
+        for (let r = 0; r <= upToRound; r++) {
+          data.push(roundStates[r].trustScores[userIdx]);
+        }
+        return {
+          label: user.name,
+          data: data,
+          color: getColorForUserType(user.type)
+        };
+      });
+      
+      drawLineChart(document.getElementById('convergenceChart'), datasets, {
+        xLabel: 'Round',
+        yLabel: 'Trust Score',
+        minValue: 0,
+        maxValue: 2.5
+      });
+    }
+    
+    function getColorForUserType(type) {
+      const colors = {
+        'discerning': '#27ae60',  // green
+        'average': '#3498db',      // blue
+        'contrarian': '#e74c3c',   // red
+        'random': '#95a5a6',       // gray
+        'colluder': '#e67e22'      // orange
+      };
+      return colors[type] || '#333';
+    }
+    
+    function getUserNote(type, trustScore) {
+      if (trustScore > 1.5) return "Often on target";
+      if (trustScore > 1.2) return "Usually accurate";
+      if (trustScore > 0.9) return "Mixed results";
+      if (trustScore > 0.6) return "Usually off target";
+      return "Rarely matches";
+    }
+    
+    // ==================== CONTROLS ====================
+    function prevRound() {
+      if (currentRound > 0) {
+        displayRound(currentRound - 1);
+      }
+    }
+    
+    function nextRound() {
+      if (currentRound < MAX_ROUNDS) {
+        displayRound(currentRound + 1);
+      }
+    }
+    
+    function goToRound(round) {
+      displayRound(round);
+    }
+    
+    function resetRound() {
+      stopPlaying();
+      displayRound(0);
+    }
+    
+    function togglePlay() {
+      if (isPlaying) {
+        stopPlaying();
+      } else {
+        startPlaying();
+      }
+    }
+    
+    function startPlaying() {
+      isPlaying = true;
+      document.getElementById('playBtn').textContent = '⏸ Pause';
+      
+      playInterval = setInterval(() => {
+        if (currentRound < MAX_ROUNDS) {
+          nextRound();
+        } else {
+          stopPlaying();
+        }
+      }, 1500);
+    }
+    
+    function stopPlaying() {
+      isPlaying = false;
+      document.getElementById('playBtn').textContent = '▶ Play';
+      if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+      }
+    }
+    
+    function reseed() {
+      stopPlaying();
+      SEED = Math.floor(Math.random() * 1000000);
+      runSimulation();
+    }
+    
+    // ==================== MAIN SIMULATION ====================
+    function runSimulation() {
+      stopPlaying();
+      initializeParams();
+      generateData();
+      computeAllRounds();
+      displayRound(0);
+    }
+    
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('input[type="range"], input[type="checkbox"]').forEach(input => {
+        input.addEventListener('input', updateDisplayedValues);
+      });
+      
+      document.getElementById('roundSlider').addEventListener('input', (e) => {
+        goToRound(parseInt(e.target.value));
+      });
+      
+      updateDisplayedValues();
+      runSimulation();
+    });
+  </script>
+</body>
+</html>
