@@ -376,7 +376,7 @@
     </div>
     
     <div class="warning">
-      <strong>⚠️ Important Note:</strong> This is a teaching tool, not a real system. We're using exactly 10 named people and 4 items to make it easy to follow. The scores show who's consistent within this small simulation, not absolute truth or taste.
+      <strong>⚠️ Important Note:</strong> This is a teaching tool, not a real system. The scores show who's consistent within this small simulation, not absolute truth or taste.
     </div>
 
     <h2>Round-by-Round Stepper</h2>
@@ -467,7 +467,70 @@
 
     <h2>Settings</h2>
     <div class="controls">
-      <p style="margin-bottom: 20px;"><strong>Note:</strong> This demo uses exactly 10 people and 4 items. You can adjust how the algorithm learns below.</p>
+      <h3>Number of Each Person Type</h3>
+      <div class="control-group">
+        <label for="numDiscerning">Discerning people
+          <span class="tooltip">?
+            <span class="tooltiptext">People who consistently rate accurately</span>
+          </span>
+        </label>
+        <input type="range" id="numDiscerning" min="0" max="10" value="2" step="1">
+        <span class="value" id="numDiscerningValue">2</span>
+      </div>
+      <div class="control-group">
+        <label for="numAverage">Average people
+          <span class="tooltip">?
+            <span class="tooltiptext">People who are usually close to accurate</span>
+          </span>
+        </label>
+        <input type="range" id="numAverage" min="0" max="10" value="3" step="1">
+        <span class="value" id="numAverageValue">3</span>
+      </div>
+      <div class="control-group">
+        <label for="numContrarian">Contrarian people
+          <span class="tooltip">?
+            <span class="tooltiptext">People who prefer items that are actually lower quality</span>
+          </span>
+        </label>
+        <input type="range" id="numContrarian" min="0" max="10" value="2" step="1">
+        <span class="value" id="numContrarianValue">2</span>
+      </div>
+      <div class="control-group">
+        <label for="numRandom">Random people
+          <span class="tooltip">?
+            <span class="tooltiptext">People who rate completely randomly</span>
+          </span>
+        </label>
+        <input type="range" id="numRandom" min="0" max="10" value="1" step="1">
+        <span class="value" id="numRandomValue">1</span>
+      </div>
+      <div class="control-group">
+        <label for="numColluder">Colluder people
+          <span class="tooltip">?
+            <span class="tooltiptext">People who try to artificially boost certain items</span>
+          </span>
+        </label>
+        <input type="range" id="numColluder" min="0" max="10" value="2" step="1">
+        <span class="value" id="numColluderValue">2</span>
+      </div>
+      <div class="control-group">
+        <label for="numLimited">Limited people
+          <span class="tooltip">?
+            <span class="tooltiptext">People who rate well below their level but random/contrarian above it</span>
+          </span>
+        </label>
+        <input type="range" id="numLimited" min="0" max="10" value="2" step="1">
+        <span class="value" id="numLimitedValue">2</span>
+      </div>
+      <div class="control-group">
+        <label for="limitedLevel">Limited level threshold
+          <span class="tooltip">?
+            <span class="tooltiptext">Quality level above which limited people can't understand (0-1 scale)</span>
+          </span>
+        </label>
+        <input type="range" id="limitedLevel" min="0.1" max="0.9" value="0.5" step="0.05">
+        <span class="value" id="limitedLevelValue">0.50</span>
+      </div>
       
       <h3>How the System Learns</h3>
       <div class="control-group">
@@ -553,13 +616,14 @@
     </div>
 
     <h2>Meet the People</h2>
-    <p><strong>This demo uses exactly 10 named people:</strong></p>
+    <p><strong>This demo simulates different types of people:</strong></p>
     <ul style="margin: 20px 0 20px 30px; line-height: 2;">
-      <li><strong style="color: #27ae60;">Sharpshooter Sam & Careful Casey</strong> (discerning) – Consistently on target</li>
-      <li><strong style="color: #3498db;">Steady Jordan, Average Alex & Helper Harper</strong> (average) – Usually close</li>
-      <li><strong style="color: #e74c3c;">Opposite Olive & Contrary Nico</strong> (contrarian) – Like the misses</li>
-      <li><strong style="color: #95a5a6;">Random Riley</strong> (random) – Coin-flip ratings</li>
-      <li><strong style="color: #e67e22;">Booster Bea & Booster Ben</strong> (colluders) – Try to boost certain items</li>
+      <li><strong style="color: #27ae60;">Discerning</strong> – Consistently on target</li>
+      <li><strong style="color: #3498db;">Average</strong> – Usually close</li>
+      <li><strong style="color: #e74c3c;">Contrarian</strong> – Like the misses</li>
+      <li><strong style="color: #95a5a6;">Random</strong> – Coin-flip ratings</li>
+      <li><strong style="color: #e67e22;">Colluder</strong> – Try to boost certain items</li>
+      <li><strong style="color: #9b59b6;">Limited</strong> – Rate well below their level, random/contrarian above</li>
     </ul>
     
     <h2>The 4 Items Being Rated</h2>
@@ -580,7 +644,7 @@
     </ol>
     
     <div style="margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 5px; text-align: center;">
-      <p><strong>Remember:</strong> This is a demonstration with a tiny dataset (10 people, 4 items) to explain an idea. Real systems need thousands of users and items, plus extensive safeguards against manipulation.</p>
+      <p><strong>Remember:</strong> This is a demonstration with a small dataset to explain an idea. Real systems need thousands of users and items, plus extensive safeguards against manipulation.</p>
     </div>
   </div>
   
@@ -589,18 +653,19 @@
     let SEED = 12345;
     const MAX_ROUNDS = 8;
     
-    const USER_NAMES = [
-      "Sharpshooter Sam",
-      "Careful Casey",
-      "Steady Jordan",
-      "Average Alex",
-      "Helper Harper",
-      "Opposite Olive",
-      "Contrary Nico",
-      "Random Riley",
-      "Booster Bea",
-      "Booster Ben"
-    ];
+    // Name templates for different person types
+    const NAME_TEMPLATES = {
+      discerning: ["Sharp", "Careful", "Precise", "Keen", "Astute", "Perceptive", "Acute", "Discerning", "Judicious", "Sage"],
+      average: ["Steady", "Average", "Helper", "Typical", "Moderate", "Regular", "Normal", "Standard", "Common", "Fair"],
+      contrarian: ["Opposite", "Contrary", "Reverse", "Inverse", "Counter", "Opposing", "Backward", "Divergent", "Contrary", "Flipped"],
+      random: ["Random", "Chaotic", "Erratic", "Unpredictable", "Variable", "Volatile", "Sporadic", "Arbitrary", "Haphazard", "Capricious"],
+      colluder: ["Booster", "Promoter", "Pusher", "Inflator", "Hyper", "Amplifier", "Enhancer", "Exaggerator", "Elevating", "Uplifting"],
+      limited: ["Limited", "Narrow", "Basic", "Simple", "Restricted", "Bounded", "Constrained", "Confined", "Shallow", "Surface"]
+    };
+    
+    const SURNAMES = ["Alex", "Blake", "Casey", "Dana", "Ellis", "Finley", "Gray", "Harper", "Indigo", "Jordan",
+                      "Kelly", "Lane", "Morgan", "Noel", "Oakley", "Parker", "Quinn", "Riley", "Sam", "Taylor",
+                      "Unique", "Val", "West", "Xen", "York", "Zane", "Avery", "Bailey", "Cameron", "Drew"];
     
     const ITEM_TITLES = [
       "Aurora Photo",
@@ -616,19 +681,6 @@
       "Retro Keyboard Review": 0.85,
       "Indie Song": 0.60,
       "Short Documentary": 0.40
-    };
-    
-    const USER_TYPE = {
-      "Sharpshooter Sam": "discerning",
-      "Careful Casey": "discerning",
-      "Steady Jordan": "average",
-      "Average Alex": "average",
-      "Helper Harper": "average",
-      "Opposite Olive": "contrarian",
-      "Contrary Nico": "contrarian",
-      "Random Riley": "random",
-      "Booster Bea": "colluder",
-      "Booster Ben": "colluder"
     };
     
     // ==================== SEEDED RANDOM ====================
@@ -665,6 +717,13 @@
     // ==================== PARAMETERS ====================
     function initializeParams() {
       params = {
+        numDiscerning: parseInt(document.getElementById('numDiscerning').value),
+        numAverage: parseInt(document.getElementById('numAverage').value),
+        numContrarian: parseInt(document.getElementById('numContrarian').value),
+        numRandom: parseInt(document.getElementById('numRandom').value),
+        numColluder: parseInt(document.getElementById('numColluder').value),
+        numLimited: parseInt(document.getElementById('numLimited').value),
+        limitedLevel: parseFloat(document.getElementById('limitedLevel').value),
         ratingDensity: parseFloat(document.getElementById('ratingDensity').value) / 100,
         noiseLevel: parseFloat(document.getElementById('noiseLevel').value),
         damping: parseFloat(document.getElementById('damping').value),
@@ -678,6 +737,13 @@
     }
     
     function updateDisplayedValues() {
+      document.getElementById('numDiscerningValue').textContent = document.getElementById('numDiscerning').value;
+      document.getElementById('numAverageValue').textContent = document.getElementById('numAverage').value;
+      document.getElementById('numContrarianValue').textContent = document.getElementById('numContrarian').value;
+      document.getElementById('numRandomValue').textContent = document.getElementById('numRandom').value;
+      document.getElementById('numColluderValue').textContent = document.getElementById('numColluder').value;
+      document.getElementById('numLimitedValue').textContent = document.getElementById('numLimited').value;
+      document.getElementById('limitedLevelValue').textContent = parseFloat(document.getElementById('limitedLevel').value).toFixed(2);
       document.getElementById('ratingDensityValue').textContent = document.getElementById('ratingDensity').value + '%';
       document.getElementById('noiseLevelValue').textContent = document.getElementById('noiseLevel').value;
       const dampingPercent = Math.round(parseFloat(document.getElementById('damping').value) * 100);
@@ -689,6 +755,13 @@
     }
     
     function resetToDefaults() {
+      document.getElementById('numDiscerning').value = 2;
+      document.getElementById('numAverage').value = 3;
+      document.getElementById('numContrarian').value = 2;
+      document.getElementById('numRandom').value = 1;
+      document.getElementById('numColluder').value = 2;
+      document.getElementById('numLimited').value = 2;
+      document.getElementById('limitedLevel').value = 0.5;
       document.getElementById('ratingDensity').value = 60;
       document.getElementById('noiseLevel').value = 0.15;
       document.getElementById('damping').value = 0.3;
@@ -705,15 +778,61 @@
       return Math.max(min, Math.min(max, value));
     }
     
+    // Track used names globally to avoid duplicates
+    let usedNames = new Set();
+    
+    function generateUserName(type, index) {
+      let name;
+      let attempts = 0;
+      
+      do {
+        const templateIndex = Math.floor(rng.next() * NAME_TEMPLATES[type].length);
+        const surnameIndex = Math.floor(rng.next() * SURNAMES.length);
+        name = `${NAME_TEMPLATES[type][templateIndex]} ${SURNAMES[surnameIndex]}`;
+        attempts++;
+      } while (usedNames.has(name) && attempts < 100);
+      
+      usedNames.add(name);
+      return name;
+    }
+    
     function generateData() {
       rng = new SeededRandom(SEED);
+      usedNames = new Set(); // Reset for each simulation
       
-      users = USER_NAMES.map((name, idx) => ({
-        name: name,
-        type: USER_TYPE[name],
-        trustScore: 1.0,
-        ratings: []
-      }));
+      users = [];
+      
+      // Generate users for each type
+      const userTypes = [
+        { type: 'discerning', count: params.numDiscerning },
+        { type: 'average', count: params.numAverage },
+        { type: 'contrarian', count: params.numContrarian },
+        { type: 'random', count: params.numRandom },
+        { type: 'colluder', count: params.numColluder },
+        { type: 'limited', count: params.numLimited }
+      ];
+      
+      userTypes.forEach(({ type, count }) => {
+        for (let i = 0; i < count; i++) {
+          users.push({
+            name: generateUserName(type, i),
+            type: type,
+            trustScore: 1.0,
+            ratings: [],
+            level: type === 'limited' ? params.limitedLevel : undefined
+          });
+        }
+      });
+      
+      // If no users, add at least one
+      if (users.length === 0) {
+        users.push({
+          name: "Default Alex",
+          type: "average",
+          trustScore: 1.0,
+          ratings: []
+        });
+      }
       
       items = ITEM_TITLES.map((title, idx) => ({
         title: title,
@@ -749,6 +868,23 @@
                   rating = clamp(Math.min(1.0, trueQ + params.collusionBoost) + rng.normal(0, 0.05 * noise), 0, 1);
                 } else {
                   rating = clamp(trueQ + rng.normal(0, 0.15 * noise * 2), 0, 1);
+                }
+                break;
+              case 'limited':
+                // Limited people rate well if item quality is below their level
+                // Otherwise they rate randomly or contrarian
+                if (trueQ <= user.level) {
+                  // Below their level: rate accurately
+                  rating = clamp(trueQ + rng.normal(0, 0.08 * noise), 0, 1);
+                } else {
+                  // Above their level: can't understand, so rate randomly or contrarian
+                  if (rng.next() < 0.5) {
+                    // Random rating
+                    rating = rng.next();
+                  } else {
+                    // Contrarian rating - they don't get it so they rate it poorly
+                    rating = clamp((1 - trueQ) + rng.normal(0, 0.2 * noise), 0, 1);
+                  }
                 }
                 break;
               default:
@@ -1267,7 +1403,8 @@
         'average': '#3498db',      // blue
         'contrarian': '#e74c3c',   // red
         'random': '#95a5a6',       // gray
-        'colluder': '#e67e22'      // orange
+        'colluder': '#e67e22',     // orange
+        'limited': '#9b59b6'       // purple
       };
       return colors[type] || '#333';
     }
