@@ -441,6 +441,35 @@
         </tbody>
       </table>
       
+      <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 5px;">
+        <h4 style="margin: 0 0 10px 0; color: #2e7d32;">Correlation Between Weighted and Unweighted Scores</h4>
+        <p style="margin: 0; font-size: 1.1em;">
+          <strong>Correlation Coefficient:</strong> <span id="correlationValue" style="font-family: monospace; font-size: 1.2em; color: #1976d2;">0.000</span>
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 0.9em; color: #666; font-style: italic;">
+          This shows how closely weighted and unweighted scores align. Values close to 1 indicate strong agreement, while values near 0 or negative indicate disagreement.
+        </p>
+      </div>
+      
+      <h3 style="margin-top: 40px;">Individual Ratings by Person</h3>
+      <p style="margin-bottom: 15px; color: #666;">This table shows what rating each person gave to each item. Empty cells mean the person did not rate that item.</p>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Person</th>
+              <th>Type</th>
+              <th>Aurora Photo</th>
+              <th>Retro Keyboard Review</th>
+              <th>Indie Song</th>
+              <th>Short Documentary</th>
+            </tr>
+          </thead>
+          <tbody id="ratingsTableBody">
+          </tbody>
+        </table>
+      </div>
+      
       <h3 style="margin-top: 40px;">Progress Visualization</h3>
       <p style="margin-bottom: 20px; color: #666;">Charts show data up to the current round (Round <span id="currentRoundDisplay">0</span>)</p>
       
@@ -900,6 +929,29 @@
     }
     
     // ==================== ALGORITHM ====================
+    function computeCorrelationCoefficient(weightedScores, unweightedScores) {
+      if (weightedScores.length === 0) return 0;
+      
+      const n = weightedScores.length;
+      const meanWeighted = weightedScores.reduce((a, b) => a + b, 0) / n;
+      const meanUnweighted = unweightedScores.reduce((a, b) => a + b, 0) / n;
+      
+      let numerator = 0;
+      let sumSqWeighted = 0;
+      let sumSqUnweighted = 0;
+      
+      for (let i = 0; i < n; i++) {
+        const diffWeighted = weightedScores[i] - meanWeighted;
+        const diffUnweighted = unweightedScores[i] - meanUnweighted;
+        numerator += diffWeighted * diffUnweighted;
+        sumSqWeighted += diffWeighted * diffWeighted;
+        sumSqUnweighted += diffUnweighted * diffUnweighted;
+      }
+      
+      const denominator = Math.sqrt(sumSqWeighted * sumSqUnweighted);
+      return denominator === 0 ? 0 : numerator / denominator;
+    }
+    
     function computeItemScores(userTrustScores) {
       return items.map(item => {
         if (item.ratings.length === 0) return { score: 0.5, unweightedScore: 0.5 };
@@ -947,12 +999,17 @@
       let trustScores = users.map(() => 1.0);
       let itemScores = computeItemScores(trustScores);
       
+      const weightedScores = itemScores.map(s => s.score);
+      const unweightedScores = itemScores.map(s => s.unweightedScore);
+      const correlation = computeCorrelationCoefficient(weightedScores, unweightedScores);
+      
       roundStates.push({
         round: 0,
         trustScores: [...trustScores],
         itemScores: itemScores.map(s => ({ ...s })),
         trustChanges: users.map(() => 0),
         itemChanges: items.map(() => 0),
+        correlation: correlation,
         summary: "Starting point: Everyone has equal voice (trust score = 1.0)"
       });
       
@@ -966,6 +1023,10 @@
         const trustChanges = trustScores.map((t, i) => t - prevTrust[i]);
         const itemChanges = itemScores.map((s, i) => s.score - prevItemScores[i].score);
         
+        const weightedScores = itemScores.map(s => s.score);
+        const unweightedScores = itemScores.map(s => s.unweightedScore);
+        const correlation = computeCorrelationCoefficient(weightedScores, unweightedScores);
+        
         const summary = generateRoundSummary(round, trustChanges, itemChanges);
         
         roundStates.push({
@@ -974,6 +1035,7 @@
           itemScores: itemScores.map(s => ({ ...s })),
           trustChanges: [...trustChanges],
           itemChanges: [...itemChanges],
+          correlation: correlation,
           summary: summary
         });
       }
@@ -1324,6 +1386,36 @@
       
       document.getElementById('avgTrustStat').textContent = avgTrust.toFixed(3);
       document.getElementById('spreadStat').textContent = (maxTrust - minTrust).toFixed(3);
+      
+      // Update correlation coefficient
+      document.getElementById('correlationValue').textContent = state.correlation.toFixed(3);
+      
+      // Update individual ratings table
+      const ratingsTableBody = document.getElementById('ratingsTableBody');
+      ratingsTableBody.innerHTML = users.map((user, userIdx) => {
+        // Create a map of item ratings for this user
+        const userRatingsMap = {};
+        user.ratings.forEach(r => {
+          userRatingsMap[r.itemIdx] = r.rating;
+        });
+        
+        const typeColor = getColorForUserType(user.type);
+        
+        return `
+          <tr>
+            <td><strong>${user.name}</strong></td>
+            <td style="color: ${typeColor}; font-weight: 600;">${user.type}</td>
+            ${items.map((item, itemIdx) => {
+              const rating = userRatingsMap[itemIdx];
+              if (rating !== undefined) {
+                return `<td style="text-align: center;">${rating.toFixed(3)}</td>`;
+              } else {
+                return `<td style="text-align: center; color: #ccc;">—</td>`;
+              }
+            }).join('')}
+          </tr>
+        `;
+      }).join('');
       
       // Update current round display
       document.getElementById('currentRoundDisplay').textContent = state.round;
