@@ -442,12 +442,12 @@
       </table>
       
       <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 5px;">
-        <h4 style="margin: 0 0 10px 0; color: #2e7d32;">Correlation Between Weighted and Unweighted Scores</h4>
+        <h4 style="margin: 0 0 10px 0; color: #2e7d32;">Correlation Between True Quality and Weighted Scores</h4>
         <p style="margin: 0; font-size: 1.1em;">
           <strong>Correlation Coefficient:</strong> <span id="correlationValue" style="font-family: monospace; font-size: 1.2em; color: #1976d2;">0.000</span>
         </p>
         <p style="margin: 10px 0 0 0; font-size: 0.9em; color: #666; font-style: italic;">
-          This shows how closely weighted and unweighted scores align. Values close to 1 indicate strong agreement, while values near 0 or negative indicate disagreement.
+          This shows how closely weighted scores align with true quality. Values close to 1 indicate the algorithm is accurately estimating quality, while values near 0 or negative indicate poor estimation.
         </p>
       </div>
       
@@ -1000,8 +1000,8 @@
       let itemScores = computeItemScores(trustScores);
       
       const weightedScores = itemScores.map(s => s.score);
-      const unweightedScores = itemScores.map(s => s.unweightedScore);
-      const correlation = computeCorrelationCoefficient(weightedScores, unweightedScores);
+      const trueQuality = items.map(item => item.trueQuality);
+      const correlation = computeCorrelationCoefficient(trueQuality, weightedScores);
       
       roundStates.push({
         round: 0,
@@ -1024,8 +1024,8 @@
         const itemChanges = itemScores.map((s, i) => s.score - prevItemScores[i].score);
         
         const weightedScores = itemScores.map(s => s.score);
-        const unweightedScores = itemScores.map(s => s.unweightedScore);
-        const correlation = computeCorrelationCoefficient(weightedScores, unweightedScores);
+        const trueQuality = items.map(item => item.trueQuality);
+        const correlation = computeCorrelationCoefficient(trueQuality, weightedScores);
         
         const summary = generateRoundSummary(round, trustChanges, itemChanges);
         
