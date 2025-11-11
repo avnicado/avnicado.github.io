@@ -444,10 +444,10 @@
       <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 5px;">
         <h4 style="margin: 0 0 10px 0; color: #2e7d32;">Correlation Between True Quality and Weighted Scores</h4>
         <p style="margin: 0; font-size: 1.1em;">
-          <strong>Correlation Coefficient:</strong> <span id="correlationValue" style="font-family: monospace; font-size: 1.2em; color: #1976d2;">0.000</span>
+          <strong>R-squared (r²):</strong> <span id="correlationValue" style="font-family: monospace; font-size: 1.2em; color: #1976d2;">0.000</span>
         </p>
         <p style="margin: 10px 0 0 0; font-size: 0.9em; color: #666; font-style: italic;">
-          This shows how closely weighted scores align with true quality. Values close to 1 indicate the algorithm is accurately estimating quality, while values near 0 or negative indicate poor estimation.
+          This shows how much of the variance in true quality is explained by the weighted scores. Values close to 1 indicate the algorithm is accurately estimating quality, while values near 0 indicate poor estimation.
         </p>
       </div>
       
@@ -949,7 +949,8 @@
       }
       
       const denominator = Math.sqrt(sumSqWeighted * sumSqUnweighted);
-      return denominator === 0 ? 0 : numerator / denominator;
+      const r = denominator === 0 ? 0 : numerator / denominator;
+      return r * r; // Return r² instead of r
     }
     
     function computeItemScores(userTrustScores) {
